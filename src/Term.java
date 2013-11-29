@@ -1,5 +1,5 @@
 
-public class Polynomial {
+public class Term {
 	
 	/* Data Variables */
 	private double number;
@@ -7,12 +7,12 @@ public class Polynomial {
 	
 	/** Constructors **/
 	
-	public Polynomial() {
+	public Term() {
 		number = 0;
 		power = 0;
 	}
 	
-	public Polynomial(double x, int y) {
+	public Term(double x, int y) {
 		this.number = x;
 		this.power = y;
 	}
