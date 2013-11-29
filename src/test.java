@@ -13,14 +13,14 @@ public class test {
 		
 		SecantComputation sec = new SecantComputation();
 		
-		ArrayList<Term> Poly = new ArrayList<Term>();
-		ArrayList<Point> pair = new ArrayList<Point>();
+		ArrayList<Polynomial> Poly = new ArrayList<Polynomial>();
+		ArrayList<Pair> pair = new ArrayList<Pair>();
 		
-		Poly.add(new Term(1,2));
-		Poly.add(new Term(-78.8,0));
+		Poly.add(new Polynomial(1,2));
+		Poly.add(new Polynomial(-78.8,0));
 		pair = sec.secant(Poly, 6, 12, 4);
 		
-		for (Point pairAns : pair) {
+		for (Pair pairAns : pair) {
 			System.out.println(pairAns.getX());
 			System.out.println(pairAns.getY());
 		}
