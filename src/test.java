@@ -24,6 +24,14 @@ public class test {
 			System.out.println(pairAns.getX());
 			System.out.println(pairAns.getY());
 		}
+		
+		//GIVEN x^2 -78.8 [6,12] round-off to 4 decimal places
+		ArrayList<Term> givenPolynomial = new ArrayList<Term>();
+		givenPolynomial.add(new Term(1,2));
+		givenPolynomial.add(new Term(-78.8,0));
+		
+		BisectionOutput test1 = BisectionComputation.computeBisectionOutput(givenPolynomial, 6, 12, 4);
+		
 	}
 
 }
