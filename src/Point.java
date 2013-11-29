@@ -1,4 +1,4 @@
-public class Pair {
+public class Point {
 	
 	/* Data Variables */
 	private double x;
@@ -6,12 +6,12 @@ public class Pair {
 	
 	/** Constructors **/
 	
-	public Pair() {
+	public Point() {
 		x = 0;
 		y = 0;
 	}
 	
-	public Pair(double x, double y) {
+	public Point(double x, double y) {
 		this.x = x;
 		this.y = y;
 	}
