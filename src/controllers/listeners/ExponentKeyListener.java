@@ -9,6 +9,7 @@ import views.PolynomialField;
 public class ExponentKeyListener implements KeyListener {
 	
 	private MainView view;
+	private PolynomialField currentField;
 	private boolean added;
 	
 	public ExponentKeyListener() {
@@ -21,15 +22,9 @@ public class ExponentKeyListener implements KeyListener {
 
 	
 	@Override
-	public void keyReleased(KeyEvent event) {}
-
-	
-	@Override
-	public void keyTyped(KeyEvent event) {
-		PolynomialField source = (PolynomialField) event.getSource();
-		
+	public void keyReleased(KeyEvent event) {
 		try {
-			if (!added && source.getExponent() > 0) {
+			if (!added && currentField.getExponent() > 0) {
 				ExponentKeyListener listener = new ExponentKeyListener();
 				listener.setView(view);
 				
@@ -44,9 +39,17 @@ public class ExponentKeyListener implements KeyListener {
 			System.out.println("Exponent does not contain a number.");
 		}
 	}
+
+	
+	@Override
+	public void keyTyped(KeyEvent event) {}
 	
 	public void setView(MainView view) {
 		this.view = view;
+	}
+	
+	public void setCurrentField(PolynomialField currentField) {
+		this.currentField = currentField;
 	}
 	
 }

@@ -11,6 +11,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.awt.FlowLayout;
 
 public class MainView extends JFrame {
 	
@@ -20,9 +21,9 @@ public class MainView extends JFrame {
 	
 	public MainView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-		setMinimumSize(new Dimension(200, 100));
+		setMinimumSize(new Dimension(300, 100));
 		setSize(600, 400);
+		setLocationRelativeTo(null);
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -36,7 +37,7 @@ public class MainView extends JFrame {
 		JPanel panLeft = new JPanel();
 		splitPane.setLeftComponent(panLeft);
 		panLeft.setLayout(new BorderLayout(0, 0));
-		panLeft.setMinimumSize(new Dimension(75, 100));
+		panLeft.setMinimumSize(new Dimension(165, 100));
 		
 		JPanel panInputTop = new JPanel();
 		panInputTop.setBorder(new TitledBorder(null, "Polynomial", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -47,6 +48,9 @@ public class MainView extends JFrame {
 		panInputTop.add(scpPolynomials);
 		
 		panPolynomials = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panPolynomials.getLayout();
+		flowLayout.setVgap(0);
+		flowLayout.setHgap(0);
 		scpPolynomials.setViewportView(panPolynomials);
 		
 		JPanel panInputBottom = new JPanel();
@@ -74,6 +78,7 @@ public class MainView extends JFrame {
 	
 	public void addPolynomialField(PolynomialField field) {
 		panPolynomials.add(field);
+		panPolynomials.updateUI();
 	}
 	
 }

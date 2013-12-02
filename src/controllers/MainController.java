@@ -1,6 +1,8 @@
 package controllers;
 
+import controllers.listeners.ExponentKeyListener;
 import views.MainView;
+import views.PolynomialField;
 
 public class MainController {
 	
@@ -9,8 +11,19 @@ public class MainController {
 	}
 	
 	public MainController() {
-		MainView frame = new MainView();
-		frame.setVisible(true);
+		MainView view = new MainView();
+		view.setVisible(true);
+		
+		ExponentKeyListener listener = new ExponentKeyListener();
+		listener.setView(view);
+		
+		PolynomialField field = new PolynomialField();
+		listener.setCurrentField(field);
+		field.setListener(listener);
+		
+		view.addPolynomialField(field);
+		
+		
 	}
 	
 }
