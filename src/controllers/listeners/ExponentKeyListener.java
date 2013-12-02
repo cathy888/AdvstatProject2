@@ -25,13 +25,22 @@ public class ExponentKeyListener implements KeyListener {
 	
 	@Override
 	public void keyTyped(KeyEvent event) {
-		ExponentKeyListener listener = new ExponentKeyListener();
-		listener.setPanel(panPolynomials);
+		PolynomialField source = (PolynomialField) event.getSource();
 		
-		PolynomialField field = new PolynomialField();
-		field.setListener(listener);
-		
-		panPolynomials.add(field);
+		try {
+			if (source.getExponent() > 0) {
+				ExponentKeyListener listener = new ExponentKeyListener();
+				listener.setPanel(panPolynomials);
+				
+				PolynomialField field = new PolynomialField();
+				field.setListener(listener);
+				
+				panPolynomials.add(field);
+			}
+		}
+		catch (Exception e) {
+			System.out.println("Exponent does not contain a number.");
+		}
 	}
 	
 	public void setPanel(JPanel panPolynomials) {
