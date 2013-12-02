@@ -6,6 +6,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import models.Nomial;
+
 public class PolynomialField extends JPanel {
 	
 	private JTextField txtCoefficient;
@@ -33,20 +35,19 @@ public class PolynomialField extends JPanel {
 		add(lblCloseParenthesis);
 	}
 	
-	public JTextField getTxtCoefficient() {
-		return txtCoefficient;
+	public double getCoefficient() {
+		return Double.parseDouble(txtCoefficient.getText());
 	}
 	
-	public void setTxtCoefficient(JTextField txtCoefficient) {
-		this.txtCoefficient = txtCoefficient;
+	public double getExponent() {
+		return Double.parseDouble(txtExponent.getText());
 	}
 	
-	public JTextField getTxtExponent() {
-		return txtExponent;
-	}
-	
-	public void setTxtExponent(JTextField txtExponent) {
-		this.txtExponent = txtExponent;
+	public Nomial getNomial() {
+		Nomial nomial = new Nomial();
+		nomial.setCoefficient(getCoefficient());
+		nomial.setExponent(getExponent());
+		return nomial;
 	}
 	
 }
