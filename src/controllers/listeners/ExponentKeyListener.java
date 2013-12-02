@@ -3,16 +3,17 @@ package controllers.listeners;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.JPanel;
-
+import views.MainView;
 import views.PolynomialField;
 
 public class ExponentKeyListener implements KeyListener {
 	
-	private JPanel panPolynomials;
+	private MainView view;
+	private boolean added;
 	
 	public ExponentKeyListener() {
-		panPolynomials = null;
+		view = null;
+		added = false;
 	}
 	
 	@Override
@@ -28,14 +29,15 @@ public class ExponentKeyListener implements KeyListener {
 		PolynomialField source = (PolynomialField) event.getSource();
 		
 		try {
-			if (source.getExponent() > 0) {
+			if (!added && source.getExponent() > 0) {
 				ExponentKeyListener listener = new ExponentKeyListener();
-				listener.setPanel(panPolynomials);
+				listener.setView(view);
 				
 				PolynomialField field = new PolynomialField();
 				field.setListener(listener);
 				
-				panPolynomials.add(field);
+				view.addPolynomialField(field);
+				added = true;
 			}
 		}
 		catch (Exception e) {
@@ -43,8 +45,8 @@ public class ExponentKeyListener implements KeyListener {
 		}
 	}
 	
-	public void setPanel(JPanel panPolynomials) {
-		this.panPolynomials = panPolynomials;
+	public void setView(MainView view) {
+		this.view = view;
 	}
 	
 }

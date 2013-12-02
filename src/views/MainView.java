@@ -72,4 +72,8 @@ public class MainView extends JFrame {
 		scpTable.setViewportView(table);
 	}
 	
+	public void addPolynomialField(PolynomialField field) {
+		panPolynomials.add(field);
+	}
+	
 }
