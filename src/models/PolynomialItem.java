@@ -1,11 +1,11 @@
 package models;
 
-public class Nomial {
+public class PolynomialItem {
 	
 	private double coefficient;
 	private double exponent;
 	
-	public Nomial() {
+	public PolynomialItem() {
 		coefficient = 0;
 		exponent = 0;
 	}

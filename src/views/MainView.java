@@ -1,17 +1,21 @@
 package views;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.util.TreeMap;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
-import javax.swing.border.TitledBorder;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-import java.awt.FlowLayout;
+
+import models.ProjectInput;
 
 public class MainView extends JFrame {
 	
@@ -79,6 +83,15 @@ public class MainView extends JFrame {
 	public void addPolynomialField(PolynomialField field) {
 		panPolynomials.add(field);
 		panPolynomials.updateUI();
+	}
+	
+	public void getInput() {
+		TreeMap<Double, Double> map = new TreeMap<>();
+		ProjectInput input = new ProjectInput();
+		
+		for (Component field : panPolynomials.getComponents()) {
+			
+		}
 	}
 	
 }
