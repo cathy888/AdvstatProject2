@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.KeyListener;
+
 import javax.swing.SwingConstants;
 
 import models.Nomial;
@@ -14,7 +16,7 @@ public class PolynomialField extends JPanel {
 	private JTextField txtExponent;
 	
 	public PolynomialField() {
-		txtCoefficient = new JTextField();
+		txtCoefficient = new JTextField("0");
 		txtCoefficient.setHorizontalAlignment(SwingConstants.CENTER);
 		txtCoefficient.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtCoefficient.setColumns(5);
@@ -24,7 +26,7 @@ public class PolynomialField extends JPanel {
 		lblX.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(lblX);
 		
-		txtExponent = new JTextField();
+		txtExponent = new JTextField("0");
 		txtExponent.setHorizontalAlignment(SwingConstants.CENTER);
 		txtExponent.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		txtExponent.setColumns(5);
@@ -43,11 +45,24 @@ public class PolynomialField extends JPanel {
 		return Double.parseDouble(txtExponent.getText());
 	}
 	
-	public Nomial getNomial() {
+	public Nomial getNomial() throws Exception {
 		Nomial nomial = new Nomial();
 		nomial.setCoefficient(getCoefficient());
 		nomial.setExponent(getExponent());
 		return nomial;
+	}
+	
+	public void setListener(KeyListener listener) {
+		clearListeners();
+		txtExponent.addKeyListener(listener);
+	}
+	
+	private void clearListeners() {
+		KeyListener[] listeners = txtExponent.getKeyListeners();
+		while (listeners.length > 0) {
+			txtExponent.removeKeyListener(listeners[0]);
+		}
+		
 	}
 	
 }

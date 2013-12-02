@@ -13,6 +13,7 @@ import javax.swing.JSplitPane;
 public class MainView extends JFrame {
 	
 	private JPanel contentPane;
+	private JPanel panPolynomials;
 	
 	public MainView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,7 +43,7 @@ public class MainView extends JFrame {
 		JScrollPane scpPolynomials = new JScrollPane();
 		panInputTop.add(scpPolynomials);
 		
-		JPanel panPolynomials = new JPanel();
+		panPolynomials = new JPanel();
 		scpPolynomials.setViewportView(panPolynomials);
 		
 		JPanel panInputBottom = new JPanel();
