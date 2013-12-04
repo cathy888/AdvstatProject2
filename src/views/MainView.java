@@ -18,12 +18,20 @@ import javax.swing.table.DefaultTableModel;
 
 import models.PolynomialItem;
 import models.ProjectInput;
+import java.awt.GridBagLayout;
+import javax.swing.JLabel;
+import java.awt.GridBagConstraints;
+import java.awt.Font;
+import javax.swing.JTextField;
+import java.awt.Insets;
 
 public class MainView extends JFrame {
 	
 	private JPanel contentPane;
 	private JPanel panPolynomials;
 	private JTable table;
+	private JTextField txtA;
+	private JTextField txtB;
 	
 	public MainView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,11 +51,11 @@ public class MainView extends JFrame {
 		JPanel panLeft = new JPanel();
 		splitPane.setLeftComponent(panLeft);
 		panLeft.setLayout(new BorderLayout(0, 0));
-		panLeft.setMinimumSize(new Dimension(165, 100));
+		panLeft.setMinimumSize(new Dimension(210, 100));
 		
 		JPanel panInputTop = new JPanel();
 		panInputTop.setBorder(new TitledBorder(null, "Polynomial", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panLeft.add(panInputTop, BorderLayout.NORTH);
+		panLeft.add(panInputTop, BorderLayout.CENTER);
 		panInputTop.setLayout(new BorderLayout(0, 0));
 		
 		JScrollPane scpPolynomials = new JScrollPane();
@@ -62,11 +70,30 @@ public class MainView extends JFrame {
 		JPanel panInputBottom = new JPanel();
 		panInputBottom.setBorder(new TitledBorder(null, "Limitations", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panLeft.add(panInputBottom, BorderLayout.SOUTH);
+		panInputBottom.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JPanel panRange = new JPanel();
+		panRange.setBorder(new TitledBorder(null, "Range", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panInputBottom.add(panRange);
+		
+		txtA = new JTextField();
+		txtA.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panRange.add(txtA);
+		txtA.setColumns(5);
+		
+		JLabel lblTo = new JLabel("to");
+		lblTo.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panRange.add(lblTo);
+		
+		txtB = new JTextField();
+		txtB.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtB.setColumns(5);
+		panRange.add(txtB);
 		
 		JPanel panRight = new JPanel();
 		splitPane.setRightComponent(panRight);
 		panRight.setLayout(new BorderLayout(0, 0));
-		panRight.setMinimumSize(new Dimension(135, 100));
+		panRight.setMinimumSize(new Dimension(90, 100));
 		
 		JPanel panGraph = new JPanel();
 		panRight.add(panGraph, BorderLayout.SOUTH);
