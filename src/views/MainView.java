@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import javax.swing.JFrame;
@@ -15,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import models.PolynomialItem;
 import models.ProjectInput;
 
 public class MainView extends JFrame {
@@ -64,6 +66,7 @@ public class MainView extends JFrame {
 		JPanel panRight = new JPanel();
 		splitPane.setRightComponent(panRight);
 		panRight.setLayout(new BorderLayout(0, 0));
+		panRight.setMinimumSize(new Dimension(135, 100));
 		
 		JPanel panGraph = new JPanel();
 		panRight.add(panGraph, BorderLayout.SOUTH);
@@ -78,6 +81,10 @@ public class MainView extends JFrame {
 		
 		table = new JTable(tableModel);
 		scpTable.setViewportView(table);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
+		TableColumnAdjuster adjuster = new TableColumnAdjuster(table);
+		adjuster.setDynamicAdjustment(true);
 	}
 	
 	public void addPolynomialField(PolynomialField field) {
@@ -85,13 +92,44 @@ public class MainView extends JFrame {
 		panPolynomials.updateUI();
 	}
 	
-	public void getInput() {
+	public ProjectInput getInput() {
 		TreeMap<Double, Double> map = new TreeMap<>();
 		ProjectInput input = new ProjectInput();
 		
-		for (Component field : panPolynomials.getComponents()) {
+		for (Component component : panPolynomials.getComponents()) {
+			PolynomialField field = (PolynomialField) component;
+			double exponent = 0;
+			double coefficient = 0;
 			
+			try {
+				exponent = field.getExponent();
+				coefficient = field.getCoefficient();
+			}
+			catch (Exception e) {}
+			
+			try {
+				coefficient += map.get(exponent);
+			}
+			catch (Exception e) {}
+			
+			map.put(exponent, coefficient);
 		}
+		
+		if (map.isEmpty()) {
+			return null;
+		}
+		
+		input.initializePolynomial();
+		
+		for (Entry<Double, Double> entry : map.entrySet()) {
+			PolynomialItem nomial = new PolynomialItem();
+			nomial.setExponent(entry.getKey());
+			nomial.setCoefficient(entry.getValue());
+			
+			input.add(nomial);
+		}
+		
+		return input;
 	}
 	
 }
