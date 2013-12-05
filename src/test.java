@@ -38,26 +38,38 @@ public class test {
 			
 		}
 		
-		//GIVEN x^2 -78.8 [6,12] round-off to 4 decimal places
-				ArrayList<Term> givenPolynomial = new ArrayList<Term>();
-				givenPolynomial.add(new Term(1,2));
-				givenPolynomial.add(new Term(-78.8,0));
-				
-				BisectionOutput test1 = BisectionComputation.computeBisectionOutput(givenPolynomial, 6, 12, -1,5);
-				
-				//Display test1
-				{
-					ArrayList<BisectionIteration> a = test1.getList();
-					System.out.println("<<<<<<<<<<START-OF-BISECTION-TESTING>>>>>>>>>> \n \titerationCount: "+a.size());
-					for(BisectionIteration i : a){
-						System.out.printf("iteration[%d]: a= %.4f  mid= %.4f  b= %.4f |f(a)= %.4f f(mid)= %.4f f(b)= %.4f\n"
-								,a.indexOf(i)+1,
-								i.getA().getX(),i.getMid().getX(),i.getB().getX(),
-								i.getA().getY(),i.getMid().getY(),i.getB().getY());
-						
-					}
-					System.out.println("<<<<<<<<<<END-OF-BISECTION-TESTING>>>>>>>>>>");
-				}
+		{//Bisection-method Testing
+			ArrayList<Term> givenPolynomial = new ArrayList<Term>();
+			ArrayList<BisectionOutput> testCases = new ArrayList<BisectionOutput>();
+			
+			givenPolynomial.clear();
+			//GIVEN x^2 -78.8 [6,12] round-off to 4 decimal places
+			givenPolynomial.add(new Term(1,2));
+			givenPolynomial.add(new Term(-78.8,0));
+			testCases.add(BisectionComputation.computeBisectionOutput(givenPolynomial, 6, 12, -1,5));
+			
+			givenPolynomial.clear();
+			givenPolynomial.add(new Term(1,2));
+			givenPolynomial.add(new Term(-3,0));
+			testCases.add(BisectionComputation.computeBisectionOutput(givenPolynomial, 1, 2, 4,-1));
+			
+			//GIVEN x^3 -x^2 -2 [1,2] round-off to 4 decimal places
+			givenPolynomial.clear();
+			givenPolynomial.add(new Term(1,3));
+			givenPolynomial.add(new Term(-1,1));
+			givenPolynomial.add(new Term(-2,0));
+			testCases.add(BisectionComputation.computeBisectionOutput(givenPolynomial, 1, 2, 4,20));
+			
+			
+			
+			for(BisectionOutput bo : testCases){
+				bo.displayBisectionOutput();
+			}
+		}
+		
+		
 	}
+	
+	
 
 }
