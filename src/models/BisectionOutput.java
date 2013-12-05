@@ -22,8 +22,12 @@ public class BisectionOutput {
 	public double getRoot(){
 		BisectionIteration lastIteration = outputs.get(outputs.size()-1);
 		Point a = lastIteration.getA();
-		double tol =  Math.pow(10,this.tolerance);
-		return Math.round(a.getX()*tol)/tol;
+		if(this.tolerance!=-1){
+			double tol =  Math.pow(10,this.tolerance);
+			return Math.round(a.getX()*tol)/tol;
+		}
+		return a.getX();
 	}
+		
 	
 }

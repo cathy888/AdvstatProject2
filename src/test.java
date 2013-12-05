@@ -4,6 +4,7 @@ import static java.lang.Math.pow;
 import java.util.ArrayList;
 
 import models.BisectionComputation;
+import models.BisectionIteration;
 import models.BisectionOutput;
 import models.Point;
 import models.SecantComputation;
@@ -42,7 +43,21 @@ public class test {
 				givenPolynomial.add(new Term(1,2));
 				givenPolynomial.add(new Term(-78.8,0));
 				
-				BisectionOutput test1 = BisectionComputation.computeBisectionOutput(givenPolynomial, 6, 12, 4);
+				BisectionOutput test1 = BisectionComputation.computeBisectionOutput(givenPolynomial, 6, 12, -1,5);
+				
+				//Display test1
+				{
+					ArrayList<BisectionIteration> a = test1.getList();
+					System.out.println("<<<<<<<<<<START-OF-BISECTION-TESTING>>>>>>>>>> \n \titerationCount: "+a.size());
+					for(BisectionIteration i : a){
+						System.out.printf("iteration[%d]: a= %.4f  mid= %.4f  b= %.4f |f(a)= %.4f f(mid)= %.4f f(b)= %.4f\n"
+								,a.indexOf(i)+1,
+								i.getA().getX(),i.getMid().getX(),i.getB().getX(),
+								i.getA().getY(),i.getMid().getY(),i.getB().getY());
+						
+					}
+					System.out.println("<<<<<<<<<<END-OF-BISECTION-TESTING>>>>>>>>>>");
+				}
 	}
 
 }
