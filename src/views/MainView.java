@@ -24,14 +24,21 @@ import java.awt.GridBagConstraints;
 import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.Insets;
+import javax.swing.UIManager;
+import javax.swing.JRadioButton;
+import javax.swing.JToggleButton;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class MainView extends JFrame {
 	
 	private JPanel contentPane;
 	private JPanel panPolynomials;
 	private JTable table;
-	private JTextField txtA;
-	private JTextField txtB;
+	private JTextField txtX0;
+	private JTextField txtX1;
 	
 	public MainView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,27 +75,77 @@ public class MainView extends JFrame {
 		scpPolynomials.setViewportView(panPolynomials);
 		
 		JPanel panInputBottom = new JPanel();
-		panInputBottom.setBorder(new TitledBorder(null, "Limitations", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panInputBottom.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Parameters", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panLeft.add(panInputBottom, BorderLayout.SOUTH);
-		panInputBottom.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panInputBottom.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panRange = new JPanel();
-		panRange.setBorder(new TitledBorder(null, "Range", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panInputBottom.add(panRange);
+		JPanel panMethod = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panMethod.getLayout();
+		panMethod.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Selected Method", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panInputBottom.add(panMethod, BorderLayout.NORTH);
 		
-		txtA = new JTextField();
-		txtA.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panRange.add(txtA);
-		txtA.setColumns(5);
+		JButton btnBisectionMethod = new JButton("Bisection Method");
+		btnBisectionMethod.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panMethod.add(btnBisectionMethod);
 		
-		JLabel lblTo = new JLabel("to");
-		lblTo.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panRange.add(lblTo);
+		JPanel panLeft1 = new JPanel();
+		panInputBottom.add(panLeft1, BorderLayout.CENTER);
+		panLeft1.setLayout(new BorderLayout(0, 0));
 		
-		txtB = new JTextField();
-		txtB.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtB.setColumns(5);
-		panRange.add(txtB);
+		JPanel panPoint = new JPanel();
+		panLeft1.add(panPoint, BorderLayout.NORTH);
+		panPoint.setBorder(new TitledBorder(null, "Starting Points", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		FlowLayout flowLayout_2 = (FlowLayout) panPoint.getLayout();
+		
+		JLabel lblX0 = new JLabel("x0:");
+		lblX0.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panPoint.add(lblX0);
+		
+		txtX0 = new JTextField();
+		txtX0.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtX0.setColumns(5);
+		panPoint.add(txtX0);
+		
+		JLabel lblX1 = new JLabel("x1:");
+		lblX1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panPoint.add(lblX1);
+		
+		txtX1 = new JTextField();
+		txtX1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtX1.setColumns(5);
+		panPoint.add(txtX1);
+		
+		JPanel panLimitations = new JPanel();
+		panLeft1.add(panLimitations, BorderLayout.CENTER);
+		panLimitations.setBorder(new TitledBorder(null, "Limitations", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panLimitations.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panIterations = new JPanel();
+		panIterations.setBorder(new TitledBorder(null, "Iterations", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panLimitations.add(panIterations, BorderLayout.NORTH);
+		panIterations.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JPanel panel = new JPanel();
+		panIterations.add(panel);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[] {50};
+		gbl_panel.rowHeights = new int[] {25};
+		gbl_panel.columnWeights = new double[]{0.0};
+		gbl_panel.rowWeights = new double[]{0.0};
+		panel.setLayout(gbl_panel);
+		
+		JSpinner spinIterations = new JSpinner();
+		GridBagConstraints gbc_spinIterations = new GridBagConstraints();
+		gbc_spinIterations.fill = GridBagConstraints.HORIZONTAL;
+		gbc_spinIterations.gridx = 0;
+		gbc_spinIterations.gridy = 0;
+		panel.add(spinIterations, gbc_spinIterations);
+		spinIterations.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		spinIterations.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		
+		JCheckBox chckbxEnable = new JCheckBox("Enable");
+		chckbxEnable.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panIterations.add(chckbxEnable);
 		
 		JPanel panRight = new JPanel();
 		splitPane.setRightComponent(panRight);
