@@ -9,6 +9,9 @@ public class BisectionComputation {
 	public static BisectionOutput computeBisectionOutput(ArrayList<Term> polynomial, double aX, double bX, int tolerance, int iterationLimit){
 		Point a = new Point(aX,SecantComputation.findY(polynomial, aX));
 		Point b = new Point(bX,SecantComputation.findY(polynomial, bX));
+		if(tolerance==-1 && iterationLimit==-1){
+			return null;
+		}
 		
 		if(!(a.getY()>0 && b.getY()<0 || a.getY()<0 && b.getY()>0) && tolerance>0){
 			return null;
