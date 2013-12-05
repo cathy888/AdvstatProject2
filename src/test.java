@@ -2,6 +2,12 @@ import static java.lang.Math.pow;
 
 import java.util.ArrayList;
 
+import models.BisectionComputation;
+import models.BisectionOutput;
+import models.SecantComputation;
+import models.Point;
+import models.Term;
+
 
 public class test {
 
@@ -18,7 +24,7 @@ public class test {
 		
 		Poly.add(new Term(1,2));
 		Poly.add(new Term(-78.8,0));
-		pair = sec.secant(Poly, 6, 12, 4);
+		//pair = sec.secant(Poly, 6, 12, 4);
 		
 		for (Point pairAns : pair) {
 			System.out.println(pairAns.getX());
@@ -30,7 +36,7 @@ public class test {
 		givenPolynomial.add(new Term(1,2));
 		givenPolynomial.add(new Term(-78.8,0));
 		
-		BisectionOutput test1 = BisectionComputation.computeBisectionOutput(givenPolynomial, 6, 12, 4);
+		//BisectionOutput test1 = BisectionComputation.computeBisectionOutput(givenPolynomial, 6, 12, 4);
 		
 	}
 

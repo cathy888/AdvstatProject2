@@ -1,0 +1,16 @@
+<<<<<<< HEAD
+bin/*
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+=======
+.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+>>>>>>> 4fc5942fdabe2567757a44a75378dd67ce8b1daa
