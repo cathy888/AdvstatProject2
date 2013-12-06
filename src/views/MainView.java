@@ -11,6 +11,8 @@ import java.awt.GridBagLayout;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import javax.swing.AbstractButton;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -22,26 +24,40 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import models.Limit;
 import models.PolynomialItem;
 import models.ProjectInput;
-import javax.swing.SwingConstants;
-import javax.swing.BoxLayout;
 
 public class MainView extends JFrame {
+	
+	/** Declaration of Class Variables **/
 	
 	private JPanel contentPane;
 	private JPanel panPolynomials;
 	private JTable table;
+	private JPanel panPoint;
+	private JLabel lblX0;
+	private JLabel lblX1;
 	private JTextField txtX0;
 	private JTextField txtX1;
+	private JButton btnBisectionMethod;
+	private JSpinner spinIterations;
 	private JTextField txtThreshold;
+	private AbstractButton chckbxIterations;
+	private JCheckBox chckbxThreshold;
+	private JButton btnClear;
+	private JButton btnSubmit;
 	
+	private DefaultTableModel tableModel;
+	
+	/* Constructor */
 	public MainView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(300, 100));
@@ -87,7 +103,8 @@ public class MainView extends JFrame {
 		panMethod.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Selected Method", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panLeft1.add(panMethod, BorderLayout.NORTH);
 		
-		JButton btnBisectionMethod = new JButton("Bisection Method");
+		btnBisectionMethod = new JButton("Bisection Method");
+		btnBisectionMethod.setToolTipText("Click to toggle.");
 		btnBisectionMethod.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panMethod.add(btnBisectionMethod);
 		
@@ -95,11 +112,11 @@ public class MainView extends JFrame {
 		panLeft1.add(panLeft2, BorderLayout.CENTER);
 		panLeft2.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panPoint = new JPanel();
+		panPoint = new JPanel();
 		panLeft2.add(panPoint, BorderLayout.NORTH);
-		panPoint.setBorder(new TitledBorder(null, "Starting Points", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panPoint.setBorder(new TitledBorder(null, "Starting Interval", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
-		JLabel lblX0 = new JLabel("x0:");
+		lblX0 = new JLabel("");
 		lblX0.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panPoint.add(lblX0);
 		
@@ -108,7 +125,7 @@ public class MainView extends JFrame {
 		txtX0.setColumns(5);
 		panPoint.add(txtX0);
 		
-		JLabel lblX1 = new JLabel("x1:");
+		lblX1 = new JLabel("to");
 		lblX1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panPoint.add(lblX1);
 		
@@ -127,25 +144,26 @@ public class MainView extends JFrame {
 		panLimitations.add(panIterations, BorderLayout.NORTH);
 		panIterations.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JPanel panel = new JPanel();
-		panIterations.add(panel);
-		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[] {60};
-		gbl_panel.rowHeights = new int[] {25};
-		gbl_panel.columnWeights = new double[]{0.0};
-		gbl_panel.rowWeights = new double[]{0.0};
-		panel.setLayout(gbl_panel);
+		JPanel panSpinner = new JPanel();
+		panIterations.add(panSpinner);
+		GridBagLayout gbl_panSpinner = new GridBagLayout();
+		gbl_panSpinner.columnWidths = new int[] {60};
+		gbl_panSpinner.rowHeights = new int[] {25};
+		gbl_panSpinner.columnWeights = new double[]{0.0};
+		gbl_panSpinner.rowWeights = new double[]{0.0};
+		panSpinner.setLayout(gbl_panSpinner);
 		
-		JSpinner spinIterations = new JSpinner();
+		spinIterations = new JSpinner();
 		GridBagConstraints gbc_spinIterations = new GridBagConstraints();
 		gbc_spinIterations.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spinIterations.gridx = 0;
 		gbc_spinIterations.gridy = 0;
-		panel.add(spinIterations, gbc_spinIterations);
+		panSpinner.add(spinIterations, gbc_spinIterations);
 		spinIterations.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		spinIterations.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		spinIterations.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 		
-		JCheckBox chckbxIterations = new JCheckBox("Enable");
+		chckbxIterations = new JCheckBox("Enable");
+		chckbxIterations.setSelected(true);
 		chckbxIterations.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panIterations.add(chckbxIterations);
 		
@@ -159,7 +177,8 @@ public class MainView extends JFrame {
 		panThreshold.add(txtThreshold);
 		txtThreshold.setColumns(5);
 		
-		JCheckBox chckbxThreshold = new JCheckBox("Enable");
+		chckbxThreshold = new JCheckBox("Enable");
+		chckbxThreshold.setSelected(true);
 		chckbxThreshold.setFont(new Font("Dialog", Font.PLAIN, 12));
 		panThreshold.add(chckbxThreshold);
 		
@@ -167,10 +186,10 @@ public class MainView extends JFrame {
 		panInputBottom.add(panButtons, BorderLayout.SOUTH);
 		panButtons.setLayout(new BorderLayout(0, 0));
 		
-		JButton btnClear = new JButton("Clear");
+		btnClear = new JButton("Clear");
 		panButtons.add(btnClear, BorderLayout.WEST);
 		
-		JButton btnSubmit = new JButton("Submit");
+		btnSubmit = new JButton("Submit");
 		panButtons.add(btnSubmit, BorderLayout.EAST);
 		
 		JPanel panRight = new JPanel();
@@ -184,7 +203,7 @@ public class MainView extends JFrame {
 		JScrollPane scpTable = new JScrollPane();
 		panRight.add(scpTable, BorderLayout.CENTER);
 		
-		DefaultTableModel tableModel = new DefaultTableModel(new Object[][] {},
+		tableModel = new DefaultTableModel(new Object[][] {},
 				new String[] { "Lower Root", "Upper Root", "Middle Root",
 						"f( Lower Root )", "f( Upper Root )", "f( Middle Root )",
 						"Relative Error" });
@@ -197,14 +216,47 @@ public class MainView extends JFrame {
 		adjuster.setDynamicAdjustment(true);
 	}
 	
+	/* Add a Polynomial Field */
 	public void addPolynomialField(PolynomialField field) {
 		panPolynomials.add(field);
 		panPolynomials.updateUI();
 	}
 	
+	/* Toggle Interval and Starting Points */
+	public void setIntervalMode(boolean b) {
+		if (b) {
+			lblX0.setText("");
+			lblX1.setText("to");
+			panPoint.setBorder(new TitledBorder(null, "Starting Interval", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		}
+		else {
+			lblX0.setText("x0:");
+			lblX1.setText("x1:");
+			panPoint.setBorder(new TitledBorder(null, "Starting Points", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		}
+	}
+	
+	/* Toggle Method Button */
+	public void setBisection(boolean b) {
+		if (b) {
+			btnBisectionMethod.setText("Bisection Method");
+		}
+		else {
+			btnBisectionMethod.setText("Secant Method");
+		}
+	}
+	
+	/* Get Selected Method */
+	public String getSelectedMethod() {
+		return btnBisectionMethod.getText();
+	}
+	
+	/* Get the Input in Fields */
 	public ProjectInput getInput() {
 		TreeMap<Double, Double> map = new TreeMap<>();
 		ProjectInput input = new ProjectInput();
+		
+		/** Get Polynomials **/
 		
 		for (Component component : panPolynomials.getComponents()) {
 			PolynomialField field = (PolynomialField) component;
@@ -233,11 +285,32 @@ public class MainView extends JFrame {
 		
 		for (Entry<Double, Double> entry : map.entrySet()) {
 			PolynomialItem nomial = new PolynomialItem();
-			nomial.setExponent(entry.getKey());
-			nomial.setCoefficient(entry.getValue());
 			
-			input.add(nomial);
+			if (entry.getValue() <= 0) {
+				nomial.setExponent(entry.getKey());
+				nomial.setCoefficient(entry.getValue());
+				
+				input.add(nomial);
+			}
 		}
+		
+		/** Get Parameters **/
+		
+		/* Get Interval / Starting Points */
+		input.setX0(Double.parseDouble(txtX0.getText()));
+		input.setX1(Double.parseDouble(txtX1.getText()));
+		
+		/* Get Iterations */
+		Limit iteration = new Limit();
+		iteration.setEnabled(chckbxIterations.isSelected());
+		iteration.setValue(Double.parseDouble(spinIterations.getValue().toString()));
+		input.setIteration(iteration);
+		
+		/* Get Threshold */
+		Limit threshold = new Limit();
+		threshold.setEnabled(chckbxThreshold.isSelected());
+		threshold.setValue(Double.parseDouble(txtThreshold.getText().toString()));
+		input.setThreshold(threshold);
 		
 		return input;
 	}
