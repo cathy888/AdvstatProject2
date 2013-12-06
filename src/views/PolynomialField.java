@@ -37,11 +37,19 @@ public class PolynomialField extends JPanel {
 		add(lblCloseParenthesis);
 	}
 	
-	public double getCoefficient() {
+	public String getTextCoefficient() {
+		return txtCoefficient.getText();
+	}
+	
+	public String getTextExponent() {
+		return txtExponent.getText();
+	}
+	
+	public Double getCoefficient() {
 		return Double.parseDouble(txtCoefficient.getText());
 	}
 	
-	public double getExponent() {
+	public Double getExponent() {
 		return Double.parseDouble(txtExponent.getText());
 	}
 	
