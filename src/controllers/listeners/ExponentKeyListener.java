@@ -29,6 +29,7 @@ public class ExponentKeyListener implements KeyListener {
 				listener.setView(view);
 				
 				PolynomialField field = new PolynomialField();
+				listener.setCurrentField(field);
 				field.setListener(listener);
 				
 				view.addPolynomialField(field);
@@ -36,7 +37,7 @@ public class ExponentKeyListener implements KeyListener {
 			}
 		}
 		catch (Exception e) {
-			System.out.println("Exponent does not contain a number.");
+			System.out.println("Exponent does not contain a number (" + currentField.getTextExponent() + ").");
 		}
 	}
 

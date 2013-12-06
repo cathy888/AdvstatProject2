@@ -30,6 +30,8 @@ import javax.swing.table.DefaultTableModel;
 
 import models.PolynomialItem;
 import models.ProjectInput;
+import javax.swing.SwingConstants;
+import javax.swing.BoxLayout;
 
 public class MainView extends JFrame {
 	
@@ -69,10 +71,8 @@ public class MainView extends JFrame {
 		panInputTop.add(scpPolynomials);
 		
 		panPolynomials = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panPolynomials.getLayout();
-		flowLayout.setVgap(0);
-		flowLayout.setHgap(0);
 		scpPolynomials.setViewportView(panPolynomials);
+		panPolynomials.setLayout(new BoxLayout(panPolynomials, BoxLayout.Y_AXIS));
 		
 		JPanel panInputBottom = new JPanel();
 		panLeft.add(panInputBottom, BorderLayout.SOUTH);
@@ -155,6 +155,7 @@ public class MainView extends JFrame {
 		panThreshold.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		txtThreshold = new JTextField();
+		txtThreshold.setHorizontalAlignment(SwingConstants.RIGHT);
 		panThreshold.add(txtThreshold);
 		txtThreshold.setColumns(5);
 		
