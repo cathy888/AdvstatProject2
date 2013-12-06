@@ -1,36 +1,35 @@
 package views;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import models.PolynomialItem;
 import models.ProjectInput;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import java.awt.Font;
-import javax.swing.JTextField;
-import java.awt.Insets;
-import javax.swing.UIManager;
-import javax.swing.JRadioButton;
-import javax.swing.JToggleButton;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 
 public class MainView extends JFrame {
 	
@@ -39,11 +38,12 @@ public class MainView extends JFrame {
 	private JTable table;
 	private JTextField txtX0;
 	private JTextField txtX1;
+	private JTextField txtThreshold;
 	
 	public MainView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(300, 100));
-		setSize(600, 400);
+		setSize(650, 450);
 		setLocationRelativeTo(null);
 		
 		contentPane = new JPanel();
@@ -75,27 +75,29 @@ public class MainView extends JFrame {
 		scpPolynomials.setViewportView(panPolynomials);
 		
 		JPanel panInputBottom = new JPanel();
-		panInputBottom.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Parameters", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panLeft.add(panInputBottom, BorderLayout.SOUTH);
 		panInputBottom.setLayout(new BorderLayout(0, 0));
 		
+		JPanel panLeft1 = new JPanel();
+		panInputBottom.add(panLeft1);
+		panLeft1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Parameters", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panLeft1.setLayout(new BorderLayout(0, 0));
+		
 		JPanel panMethod = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) panMethod.getLayout();
 		panMethod.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Selected Method", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panInputBottom.add(panMethod, BorderLayout.NORTH);
+		panLeft1.add(panMethod, BorderLayout.NORTH);
 		
 		JButton btnBisectionMethod = new JButton("Bisection Method");
 		btnBisectionMethod.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panMethod.add(btnBisectionMethod);
 		
-		JPanel panLeft1 = new JPanel();
-		panInputBottom.add(panLeft1, BorderLayout.CENTER);
-		panLeft1.setLayout(new BorderLayout(0, 0));
+		JPanel panLeft2 = new JPanel();
+		panLeft1.add(panLeft2, BorderLayout.CENTER);
+		panLeft2.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panPoint = new JPanel();
-		panLeft1.add(panPoint, BorderLayout.NORTH);
+		panLeft2.add(panPoint, BorderLayout.NORTH);
 		panPoint.setBorder(new TitledBorder(null, "Starting Points", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		FlowLayout flowLayout_2 = (FlowLayout) panPoint.getLayout();
 		
 		JLabel lblX0 = new JLabel("x0:");
 		lblX0.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -116,7 +118,7 @@ public class MainView extends JFrame {
 		panPoint.add(txtX1);
 		
 		JPanel panLimitations = new JPanel();
-		panLeft1.add(panLimitations, BorderLayout.CENTER);
+		panLeft2.add(panLimitations, BorderLayout.CENTER);
 		panLimitations.setBorder(new TitledBorder(null, "Limitations", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panLimitations.setLayout(new BorderLayout(0, 0));
 		
@@ -128,7 +130,7 @@ public class MainView extends JFrame {
 		JPanel panel = new JPanel();
 		panIterations.add(panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[] {50};
+		gbl_panel.columnWidths = new int[] {60};
 		gbl_panel.rowHeights = new int[] {25};
 		gbl_panel.columnWeights = new double[]{0.0};
 		gbl_panel.rowWeights = new double[]{0.0};
@@ -143,9 +145,32 @@ public class MainView extends JFrame {
 		spinIterations.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		spinIterations.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		
-		JCheckBox chckbxEnable = new JCheckBox("Enable");
-		chckbxEnable.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panIterations.add(chckbxEnable);
+		JCheckBox chckbxIterations = new JCheckBox("Enable");
+		chckbxIterations.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panIterations.add(chckbxIterations);
+		
+		JPanel panThreshold = new JPanel();
+		panThreshold.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Threshold", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panLimitations.add(panThreshold, BorderLayout.CENTER);
+		panThreshold.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		txtThreshold = new JTextField();
+		panThreshold.add(txtThreshold);
+		txtThreshold.setColumns(5);
+		
+		JCheckBox chckbxThreshold = new JCheckBox("Enable");
+		chckbxThreshold.setFont(new Font("Dialog", Font.PLAIN, 12));
+		panThreshold.add(chckbxThreshold);
+		
+		JPanel panButtons = new JPanel();
+		panInputBottom.add(panButtons, BorderLayout.SOUTH);
+		panButtons.setLayout(new BorderLayout(0, 0));
+		
+		JButton btnClear = new JButton("Clear");
+		panButtons.add(btnClear, BorderLayout.WEST);
+		
+		JButton btnSubmit = new JButton("Submit");
+		panButtons.add(btnSubmit, BorderLayout.EAST);
 		
 		JPanel panRight = new JPanel();
 		splitPane.setRightComponent(panRight);
