@@ -173,6 +173,7 @@ public class MainView extends JFrame {
 		panThreshold.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		txtThreshold = new JTextField();
+		txtThreshold.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtThreshold.setHorizontalAlignment(SwingConstants.RIGHT);
 		panThreshold.add(txtThreshold);
 		txtThreshold.setColumns(5);
@@ -252,7 +253,7 @@ public class MainView extends JFrame {
 	}
 	
 	/* Get the Input in Fields */
-	public ProjectInput getInput() {
+	public ProjectInput getInput() throws Exception {
 		TreeMap<Double, Double> map = new TreeMap<>();
 		ProjectInput input = new ProjectInput();
 		
