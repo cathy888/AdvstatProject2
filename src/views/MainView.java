@@ -8,6 +8,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionListener;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
@@ -50,8 +51,8 @@ public class MainView extends JFrame {
 	private JButton btnBisectionMethod;
 	private JSpinner spinIterations;
 	private JTextField txtThreshold;
-	private AbstractButton chckbxIterations;
-	private JCheckBox chckbxThreshold;
+	private AbstractButton chkbxIterations;
+	private JCheckBox chkbxThreshold;
 	private JButton btnClear;
 	private JButton btnSubmit;
 	
@@ -162,10 +163,10 @@ public class MainView extends JFrame {
 		spinIterations.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		spinIterations.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 		
-		chckbxIterations = new JCheckBox("Enable");
-		chckbxIterations.setSelected(true);
-		chckbxIterations.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panIterations.add(chckbxIterations);
+		chkbxIterations = new JCheckBox("Enable");
+		chkbxIterations.setSelected(true);
+		chkbxIterations.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panIterations.add(chkbxIterations);
 		
 		JPanel panThreshold = new JPanel();
 		panThreshold.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Threshold", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -178,10 +179,10 @@ public class MainView extends JFrame {
 		panThreshold.add(txtThreshold);
 		txtThreshold.setColumns(5);
 		
-		chckbxThreshold = new JCheckBox("Enable");
-		chckbxThreshold.setSelected(true);
-		chckbxThreshold.setFont(new Font("Dialog", Font.PLAIN, 12));
-		panThreshold.add(chckbxThreshold);
+		chkbxThreshold = new JCheckBox("Enable");
+		chkbxThreshold.setSelected(true);
+		chkbxThreshold.setFont(new Font("Dialog", Font.PLAIN, 12));
+		panThreshold.add(chkbxThreshold);
 		
 		JPanel panButtons = new JPanel();
 		panInputBottom.add(panButtons, BorderLayout.SOUTH);
@@ -303,17 +304,42 @@ public class MainView extends JFrame {
 		
 		/* Get Iterations */
 		Limit iteration = new Limit();
-		iteration.setEnabled(chckbxIterations.isSelected());
+		iteration.setEnabled(chkbxIterations.isSelected());
 		iteration.setValue(Double.parseDouble(spinIterations.getValue().toString()));
 		input.setIteration(iteration);
 		
 		/* Get Threshold */
 		Limit threshold = new Limit();
-		threshold.setEnabled(chckbxThreshold.isSelected());
+		threshold.setEnabled(chkbxThreshold.isSelected());
 		threshold.setValue(Double.parseDouble(txtThreshold.getText().toString()));
 		input.setThreshold(threshold);
 		
 		return input;
+	}
+	
+	/* Clear the Fields */
+	public void clearFields() {
+		panPolynomials.removeAll();
+		txtX0.setText("");
+		txtX1.setText("");
+		spinIterations.setValue(1);
+		txtThreshold.setText("");
+		chkbxIterations.setSelected(true);
+		chkbxThreshold.setSelected(true);
+	}
+	
+	/** Add Button Listeners **/
+	
+	public void addBtnMethodListener(ActionListener listener) {
+		btnBisectionMethod.addActionListener(listener);
+	}
+	
+	public void addBtnSubmitListener(ActionListener listener) {
+		btnSubmit.addActionListener(listener);
+	}
+	
+	public void addBtnClearListener(ActionListener listener) {
+		btnClear.addActionListener(listener);
 	}
 	
 }

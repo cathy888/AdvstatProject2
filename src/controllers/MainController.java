@@ -1,8 +1,7 @@
 package controllers;
 
-import controllers.listeners.ExponentKeyListener;
 import views.MainView;
-import views.PolynomialField;
+import controllers.listeners.ClearActionListener;
 
 public class MainController {
 	
@@ -14,16 +13,10 @@ public class MainController {
 		MainView view = new MainView();
 		view.setVisible(true);
 		
-		ExponentKeyListener listener = new ExponentKeyListener();
-		listener.setView(view);
-		
-		PolynomialField field = new PolynomialField();
-		listener.setCurrentField(field);
-		field.setListener(listener);
-		
-		view.addPolynomialField(field);
-		
-		
+		ClearActionListener clearListener = new ClearActionListener();
+		clearListener.setView(view);
+		clearListener.actionPerformed(null);
+		view.addBtnClearListener(clearListener);
 	}
 	
 }
