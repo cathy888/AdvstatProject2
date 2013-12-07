@@ -1,97 +1,107 @@
 package models;
+
 import java.util.ArrayList;
 import static java.lang.Math.pow;
 
 public class SecantComputation {
 
-	public ArrayList<Point> secantIteration(ArrayList<Term> Poly, double x0 , double x1, int iteration) {
+	public ArrayList<Point> secantIteration(ArrayList<Term> Poly, double x0,
+			double x1, int iteration) {
 		ArrayList<Point> Ans = new ArrayList<Point>();
 		double newX = 0;
 		int current = 0;
 		Point pair;
-		//X0, X1
+		// X0, X1
 		Ans.add(new Point(x0, findY(Poly, x0)));
 		Ans.add(new Point(x1, findY(Poly, x1)));
 		current++;
-		
-		for (int i = 2; i <= iteration; i++){
-			newX = Ans.get(current).getX() - ((Ans.get(current).getY() * (Ans.get(current - 1).getX() - Ans.get(current).getX())) / (Ans.get(current - 1).getY() - Ans.get(current).getY()));
-			Ans.add( new Point( newX, findY(Poly, newX)));
+
+		for (int i = 2; i <= iteration; i++) {
+			newX = Ans.get(current).getX()
+					- ((Ans.get(current).getY() * (Ans.get(current - 1).getX() - Ans
+							.get(current).getX())) / (Ans.get(current - 1)
+							.getY() - Ans.get(current).getY()));
+			Ans.add(new Point(newX, findY(Poly, newX)));
 			current++;
 		}
-		
-		
+
 		return Ans;
 	}
-	
-	public ArrayList<Point> secantThreshold(ArrayList<Term> Poly, double x0 , double x1, double threshold) {
+
+	public ArrayList<Point> secantThreshold(ArrayList<Term> Poly, double x0,
+			double x1, double threshold) {
 		ArrayList<Point> Ans = new ArrayList<Point>();
 		double newX = 0;
 		int current = 0;
 		double temp = 0;
 		Point pair;
-		//X0, X1
+		// X0, X1
 		Ans.add(new Point(x0, findY(Poly, x0)));
 		Ans.add(new Point(x1, findY(Poly, x1)));
-		temp = (x1 - x0)/x1;
-		if(temp < 0)
+		temp = (x1 - x0) / x1;
+		if (temp < 0)
 			temp = temp * -1;
 		current++;
-		
-		while(temp > threshold){
-			newX = Ans.get(current).getX() - ((Ans.get(current).getY() * (Ans.get(current - 1).getX() - Ans.get(current).getX())) / (Ans.get(current - 1).getY() - Ans.get(current).getY()));
-			Ans.add( new Point( newX, findY(Poly, newX)));
+
+		while (temp > threshold) {
+			newX = Ans.get(current).getX()
+					- ((Ans.get(current).getY() * (Ans.get(current - 1).getX() - Ans
+							.get(current).getX())) / (Ans.get(current - 1)
+							.getY() - Ans.get(current).getY()));
+			Ans.add(new Point(newX, findY(Poly, newX)));
 			current++;
-			
-			temp = (Ans.get(current).getX() - Ans.get(current -1).getX())/ Ans.get(current).getX();
-			if(temp < 0)
+
+			temp = (Ans.get(current).getX() - Ans.get(current - 1).getX())
+					/ Ans.get(current).getX();
+			if (temp < 0)
 				temp = temp * -1;
 		}
-		
-		
+
 		return Ans;
 	}
-	
-	
-	public ArrayList<Point> secantBoth(ArrayList<Term> Poly, double x0 , double x1, double threshold, int iteration) {
+
+	public ArrayList<Point> secantBoth(ArrayList<Term> Poly, double x0,
+			double x1, double threshold, int iteration) {
 		ArrayList<Point> Ans = new ArrayList<Point>();
 		double newX = 0;
 		int current = 0;
 		double temp = 0;
-		int i =2;
+		int i = 2;
 		Point pair;
-		//X0, X1
+		// X0, X1
 		Ans.add(new Point(x0, findY(Poly, x0)));
 		Ans.add(new Point(x1, findY(Poly, x1)));
-		temp = (x1 - x0)/x1;
-		if(temp < 0)
+		temp = (x1 - x0) / x1;
+		if (temp < 0)
 			temp = temp * -1;
 		current++;
-		
-		while(temp > threshold && i <= iteration){
+
+		while (temp > threshold && i <= iteration) {
 			i++;
-			newX = Ans.get(current).getX() - ((Ans.get(current).getY() * (Ans.get(current - 1).getX() - Ans.get(current).getX())) / (Ans.get(current - 1).getY() - Ans.get(current).getY()));
-			Ans.add( new Point( newX, findY(Poly, newX)));
+			newX = Ans.get(current).getX()
+					- ((Ans.get(current).getY() * (Ans.get(current - 1).getX() - Ans
+							.get(current).getX())) / (Ans.get(current - 1)
+							.getY() - Ans.get(current).getY()));
+			Ans.add(new Point(newX, findY(Poly, newX)));
 			current++;
-			
-			temp = (Ans.get(current).getX() - Ans.get(current -1).getX())/ Ans.get(current).getX();
-			if(temp < 0)
+
+			temp = (Ans.get(current).getX() - Ans.get(current - 1).getX())
+					/ Ans.get(current).getX();
+			if (temp < 0)
 				temp = temp * -1;
-			
+
 		}
-		
-		
+
 		return Ans;
 	}
-	
-	
-	public static double findY( ArrayList<Term> Poly, double x){
+
+	public static double findY(ArrayList<Term> Poly, double x) {
 		double y = 0;
-		
+
 		for (Term poly : Poly) {
-			y += poly.getNumber() * pow(x, poly.getPower() );
+			y += poly.getNumber() * pow(x, poly.getPower());
 		}
-			
+
 		return y;
 	}
 }
