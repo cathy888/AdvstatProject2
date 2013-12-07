@@ -287,13 +287,13 @@ public class MainView extends JFrame {
 		input.initializePolynomial();
 		
 		for (Entry<Double, Double> entry : map.entrySet()) {
-			Term nomial = new Term();
+			Term term = new Term();
 			
 			if (entry.getValue() <= 0) {
-				nomial.setPower(entry.getKey());
-				nomial.setNumber(entry.getValue());
+				term.setPower(entry.getKey());
+				term.setNumber(entry.getValue());
 				
-				input.add(nomial);
+				input.add(term);
 			}
 		}
 		
