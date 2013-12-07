@@ -19,18 +19,20 @@ public class ExponentKeyListener implements KeyListener {
 	
 	@Override
 	public void keyPressed(KeyEvent event) {}
-
 	
 	@Override
 	public void keyReleased(KeyEvent event) {
 		try {
 			if (!added && currentField.getExponent() > 0) {
-				ExponentKeyListener listener = new ExponentKeyListener();
-				listener.setView(view);
+				NumericKeyListener numericListener = new NumericKeyListener();
+				
+				ExponentKeyListener exponentListener = new ExponentKeyListener();
+				exponentListener.setView(view);
 				
 				PolynomialField field = new PolynomialField();
-				listener.setCurrentField(field);
-				field.setListener(listener);
+				exponentListener.setCurrentField(field);
+				field.addNumericListener(numericListener);
+				field.addExponentListener(exponentListener);
 				
 				view.addPolynomialField(field);
 				added = true;
@@ -40,7 +42,6 @@ public class ExponentKeyListener implements KeyListener {
 			System.out.println("Exponent does not contain a number (" + currentField.getTextExponent() + ").");
 		}
 	}
-
 	
 	@Override
 	public void keyTyped(KeyEvent event) {}

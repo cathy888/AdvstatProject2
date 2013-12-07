@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
@@ -328,7 +329,7 @@ public class MainView extends JFrame {
 		chkbxThreshold.setSelected(true);
 	}
 	
-	/** Add Button Listeners **/
+	/** Add Listeners **/
 	
 	public void addBtnMethodListener(ActionListener listener) {
 		btnBisectionMethod.addActionListener(listener);
@@ -340,6 +341,12 @@ public class MainView extends JFrame {
 	
 	public void addBtnClearListener(ActionListener listener) {
 		btnClear.addActionListener(listener);
+	}
+	
+	public void addNumericListeners(KeyListener listener) {
+		txtX0.addKeyListener(listener);
+		txtX1.addKeyListener(listener);
+		txtThreshold.addKeyListener(listener);
 	}
 	
 }

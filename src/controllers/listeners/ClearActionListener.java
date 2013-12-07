@@ -18,12 +18,15 @@ public class ClearActionListener implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 		view.clearFields();
 		
-		ExponentKeyListener listener = new ExponentKeyListener();
-		listener.setView(view);
+		NumericKeyListener numericListener = new NumericKeyListener();
+		
+		ExponentKeyListener exponentListener = new ExponentKeyListener();
+		exponentListener.setView(view);
 		
 		PolynomialField field = new PolynomialField();
-		listener.setCurrentField(field);
-		field.setListener(listener);
+		exponentListener.setCurrentField(field);
+		field.addNumericListener(numericListener);
+		field.addExponentListener(exponentListener);
 		
 		view.addPolynomialField(field);
 	}

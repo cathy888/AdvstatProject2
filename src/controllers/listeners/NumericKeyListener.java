@@ -3,29 +3,34 @@ package controllers.listeners;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import views.MainView;
+import javax.swing.JTextField;
 
 public class NumericKeyListener implements KeyListener {
 	
-	private MainView view;
-	
-	public NumericKeyListener() {
-		view = null;
-	}
+	public NumericKeyListener() {}
 	
 	@Override
-	public void keyTyped(KeyEvent event) {
-		
-	}
-	
-	public void setView(MainView view) {
-		this.view = view;
-	}
+	public void keyTyped(KeyEvent event) {}
 	
 	@Override
 	public void keyPressed(KeyEvent event) {}
 	
 	@Override
-	public void keyReleased(KeyEvent event) {}
+	public void keyReleased(KeyEvent event) {
+		String text = null;
+		
+		/* Get text */
+		if (event.getSource().getClass() == JTextField.class) {
+			text = ((JTextField) event.getSource()).getText();
+		}
+		
+		/* Check if text is numeric only (maybe with .s) */
+		text = text.replaceAll("[^\\d.]", "");
+		
+		/* Set text */
+		if (event.getSource().getClass() == JTextField.class) {
+			((JTextField) event.getSource()).setText(text);
+		}
+	}
 	
 }

@@ -3,6 +3,7 @@ package controllers;
 import views.MainView;
 import controllers.listeners.ClearActionListener;
 import controllers.listeners.MethodActionListener;
+import controllers.listeners.NumericKeyListener;
 import controllers.listeners.SubmitActionListener;
 
 public class MainController {
@@ -27,6 +28,9 @@ public class MainController {
 		SubmitActionListener submitListener = new SubmitActionListener();
 		submitListener.setView(view);
 		view.addBtnSubmitListener(submitListener);
+		
+		NumericKeyListener numericListener = new NumericKeyListener();
+		view.addNumericListeners(numericListener);
 	}
 	
 }

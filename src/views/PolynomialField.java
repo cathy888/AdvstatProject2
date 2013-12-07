@@ -60,17 +60,13 @@ public class PolynomialField extends JPanel {
 		return nomial;
 	}
 	
-	public void setListener(KeyListener listener) {
-		clearListeners();
+	public void addExponentListener(KeyListener listener) {
 		txtExponent.addKeyListener(listener);
 	}
 	
-	private void clearListeners() {
-		KeyListener[] listeners = txtExponent.getKeyListeners();
-		while (listeners.length > 0) {
-			txtExponent.removeKeyListener(listeners[0]);
-		}
-		
+	public void addNumericListener(KeyListener listener) {
+		txtExponent.addKeyListener(listener);
+		txtCoefficient.addKeyListener(listener);
 	}
 	
 }
