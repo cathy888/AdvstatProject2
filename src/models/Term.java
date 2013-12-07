@@ -4,7 +4,7 @@ public class Term {
 	
 	/* Data Variables */
 	private double number;
-	private int power;
+	private double power;
 	
 	/** Constructors **/
 	
@@ -13,7 +13,7 @@ public class Term {
 		power = 0;
 	}
 	
-	public Term(double x, int y) {
+	public Term(double x, double y) {
 		this.number = x;
 		this.power = y;
 	}
@@ -24,7 +24,7 @@ public class Term {
 		this.number = x;
 	}
 	
-	public void setPower(int power) {
+	public void setPower(double power) {
 		this.power = power;
 	}
 	
@@ -32,7 +32,7 @@ public class Term {
 		return number;
 	}
 	
-	public int getPower() {
+	public double getPower() {
 		return power;
 	}
 	
