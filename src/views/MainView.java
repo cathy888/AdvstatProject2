@@ -34,7 +34,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import models.Limit;
-import models.PolynomialItem;
+import models.Term;
 import models.ProjectInput;
 
 public class MainView extends JFrame {
@@ -287,11 +287,11 @@ public class MainView extends JFrame {
 		input.initializePolynomial();
 		
 		for (Entry<Double, Double> entry : map.entrySet()) {
-			PolynomialItem nomial = new PolynomialItem();
+			Term nomial = new Term();
 			
 			if (entry.getValue() <= 0) {
-				nomial.setExponent(entry.getKey());
-				nomial.setCoefficient(entry.getValue());
+				nomial.setPower(entry.getKey());
+				nomial.setNumber(entry.getValue());
 				
 				input.add(nomial);
 			}

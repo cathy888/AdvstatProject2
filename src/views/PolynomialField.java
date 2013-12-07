@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.SwingConstants;
 
-import models.PolynomialItem;
+import models.Term;
 
 public class PolynomialField extends JPanel {
 	
@@ -53,11 +53,11 @@ public class PolynomialField extends JPanel {
 		return Double.parseDouble(txtExponent.getText());
 	}
 	
-	public PolynomialItem getNomial() throws Exception {
-		PolynomialItem nomial = new PolynomialItem();
-		nomial.setCoefficient(getCoefficient());
-		nomial.setExponent(getExponent());
-		return nomial;
+	public Term getTerm() throws Exception {
+		Term term = new Term();
+		term.setPower(getCoefficient());
+		term.setNumber(getExponent());
+		return term;
 	}
 	
 	public void addExponentListener(KeyListener listener) {

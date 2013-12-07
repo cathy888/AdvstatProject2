@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ProjectInput {
 	
-	private ArrayList<PolynomialItem> polynomial;
+	private ArrayList<Term> polynomial;
 	private double x0;
 	private double x1;
 	private Limit iteration;
@@ -16,11 +16,11 @@ public class ProjectInput {
 		threshold = null;
 	}
 	
-	public void setPolynomial(ArrayList<PolynomialItem> polynomial) {
+	public void setPolynomial(ArrayList<Term> polynomial) {
 		this.polynomial = polynomial;
 	}
 	
-	public ArrayList<PolynomialItem> getPolynomial() {
+	public ArrayList<Term> getPolynomial() {
 		return polynomial;
 	}
 	
@@ -28,11 +28,11 @@ public class ProjectInput {
 		polynomial = new ArrayList<>();
 	}
 	
-	public void add(PolynomialItem nomial) {
-		polynomial.add(nomial);
+	public void add(Term term) {
+		polynomial.add(term);
 	}
 	
-	public PolynomialItem get(int index) {
+	public Term get(int index) {
 		return polynomial.get(index);
 	}
 	
