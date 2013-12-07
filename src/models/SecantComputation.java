@@ -5,12 +5,10 @@ import static java.lang.Math.pow;
 
 public class SecantComputation {
 
-	public ArrayList<Point> secantIteration(ArrayList<Term> Poly, double x0,
-			double x1, int iteration) {
+	public static ArrayList<Point> secantIteration(ArrayList<Term> Poly, double x0, double x1, int iteration) {
 		ArrayList<Point> Ans = new ArrayList<Point>();
 		double newX = 0;
 		int current = 0;
-		Point pair;
 		// X0, X1
 		Ans.add(new Point(x0, findY(Poly, x0)));
 		Ans.add(new Point(x1, findY(Poly, x1)));
@@ -28,13 +26,11 @@ public class SecantComputation {
 		return Ans;
 	}
 
-	public ArrayList<Point> secantThreshold(ArrayList<Term> Poly, double x0,
-			double x1, double threshold) {
+	public static ArrayList<Point> secantThreshold(ArrayList<Term> Poly, double x0, double x1, double threshold) {
 		ArrayList<Point> Ans = new ArrayList<Point>();
 		double newX = 0;
 		int current = 0;
 		double temp = 0;
-		Point pair;
 		// X0, X1
 		Ans.add(new Point(x0, findY(Poly, x0)));
 		Ans.add(new Point(x1, findY(Poly, x1)));
@@ -60,14 +56,12 @@ public class SecantComputation {
 		return Ans;
 	}
 
-	public ArrayList<Point> secantBoth(ArrayList<Term> Poly, double x0,
-			double x1, double threshold, int iteration) {
+	public static ArrayList<Point> secantBoth(ArrayList<Term> Poly, double x0, double x1, double threshold, int iteration) {
 		ArrayList<Point> Ans = new ArrayList<Point>();
 		double newX = 0;
 		int current = 0;
 		double temp = 0;
 		int i = 2;
-		Point pair;
 		// X0, X1
 		Ans.add(new Point(x0, findY(Poly, x0)));
 		Ans.add(new Point(x1, findY(Poly, x1)));
