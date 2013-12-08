@@ -9,9 +9,7 @@ public class BisectionComputation {
 	/*
 	 * returns null if invalid input
 	 */
-	public static BisectionOutput computeBisectionOutput(
-			ArrayList<Term> polynomial, double aX, double bX, int tolerance,
-			int iterationLimit) {
+	public static BisectionOutput computeBisectionOutput(ArrayList<Term> polynomial, double aX, double bX, int tolerance, int iterationLimit) {
 		Point a = new Point(aX, SecantComputation.findY(polynomial, aX));
 		Point b = new Point(bX, SecantComputation.findY(polynomial, bX));
 		if (iterationLimit == -1) {
@@ -70,8 +68,7 @@ public class BisectionComputation {
 		return false;
 	}
 
-	public static boolean arePointsEqualWithinDecimalTolerance(Point a,
-			Point b, double tol, int tolerance) {
+	public static boolean arePointsEqualWithinDecimalTolerance(Point a, Point b, double tol, int tolerance) {
 		System.out.println("tol: " + tol);
 		if (tolerance == -1) {
 			return false;
