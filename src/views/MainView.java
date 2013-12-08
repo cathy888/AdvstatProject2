@@ -34,6 +34,16 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.RectangleInsets;
+
 import models.objects.Iteration;
 import models.objects.Limit;
 import models.objects.ProjectInput;
@@ -205,6 +215,8 @@ public class MainView extends JFrame {
 		panRight.setMinimumSize(new Dimension(90, 100));
 		
 		JPanel panGraph = new JPanel();
+		panGraph.setLayout(new BorderLayout(0, 0));
+		panGraph.add(createGraphPanel(), BorderLayout.CENTER);
 		panRight.add(panGraph, BorderLayout.SOUTH);
 		
 		JScrollPane scpTable = new JScrollPane();
@@ -223,6 +235,7 @@ public class MainView extends JFrame {
 		adjuster.setDynamicAdjustment(true);
 	}
 	
+	/* Add Rows to Table */
 	public void addRows(ArrayList<Iteration> iterations) {
 		for (Iteration iteration : iterations) {
 			addRow(iteration);
@@ -351,6 +364,35 @@ public class MainView extends JFrame {
 		txtThreshold.setText("");
 		chkbxIterations.setSelected(true);
 		chkbxThreshold.setSelected(true);
+	}
+	
+	/* Create a Graph */
+	private ChartPanel createGraphPanel() {
+		XYSeries line1 = new XYSeries("X");
+		XYSeries line2 = new XYSeries("Y");
+		
+		XYSeriesCollection xyDataset = new XYSeriesCollection();
+		xyDataset.addSeries(line1);
+		xyDataset.addSeries(line2);
+		
+		JFreeChart chart = ChartFactory.createXYLineChart("", "x", "f(x)",
+				xyDataset, PlotOrientation.VERTICAL, true, true, false);
+		
+		XYPlot plot = (XYPlot) chart.getPlot();
+		plot.setBackgroundPaint(Color.white);
+		plot.setDomainGridlinePaint(Color.GREEN);
+		plot.setRangeGridlinePaint(Color.orange);
+		plot.setAxisOffset(new RectangleInsets(50, 0, 20, 5));
+		plot.setDomainCrosshairVisible(true);
+		plot.setRangeCrosshairVisible(true);
+		
+		XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
+		renderer.setBaseShapesVisible(true);
+		renderer.setBaseShapesFilled(true);
+		
+		ChartPanel panel = new ChartPanel(chart);
+		
+		return panel;
 	}
 	
 	/** Add Listeners **/
