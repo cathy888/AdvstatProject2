@@ -46,6 +46,7 @@ import org.jfree.ui.RectangleInsets;
 
 import models.objects.Iteration;
 import models.objects.Limit;
+import models.objects.Point;
 import models.objects.ProjectInput;
 import models.objects.Term;
 
@@ -57,17 +58,24 @@ public class MainView extends JFrame {
 	private JPanel panPolynomials;
 	private JTable table;
 	private JPanel panPoint;
-	private JLabel lblX0;
-	private JLabel lblX1;
-	private JTextField txtX0;
-	private JTextField txtX1;
+	
 	private JButton btnBisectionMethod;
-	private JSpinner spinIterations;
-	private JTextField txtThreshold;
 	private AbstractButton chkbxIterations;
 	private JCheckBox chkbxThreshold;
+	
+	private JLabel lblX0;
+	private JLabel lblX1;
+	
+	private JTextField txtX0;
+	private JTextField txtX1;
+	private JSpinner spinIterations;
+	private JTextField txtThreshold;
+	
 	private JButton btnClear;
 	private JButton btnSubmit;
+	
+	private XYSeries line1;
+	private XYSeries line2;
 	
 	private DefaultTableModel tableModel;
 	
@@ -368,8 +376,8 @@ public class MainView extends JFrame {
 	
 	/* Create a Graph */
 	private ChartPanel createGraphPanel() {
-		XYSeries line1 = new XYSeries("X");
-		XYSeries line2 = new XYSeries("Y");
+		line1 = new XYSeries("X");
+		line2 = new XYSeries("Y");
 		
 		XYSeriesCollection xyDataset = new XYSeriesCollection();
 		xyDataset.addSeries(line1);
@@ -393,6 +401,24 @@ public class MainView extends JFrame {
 		ChartPanel panel = new ChartPanel(chart);
 		
 		return panel;
+	}
+	
+	/* Update Graph Data */
+	public void updateGraphData(ArrayList<Point> newPair, ArrayList<Point> samplingDistribution) {
+		line1.clear();
+		
+		for (int i = 0; i <newPair.size(); i++) {
+			double rounded = (double) Math.round(newPair.get(i).getY()* 10000) / 10000;
+			line1.add(newPair.get(i).getX(), rounded);
+		}
+		
+		line2.clear();
+		
+		for (int i = 0; i <samplingDistribution.size(); i++) {
+			double rounded3 = (double) Math.round(samplingDistribution.get(i).getY()* 10000) / 10000;
+			double rounded4 = (double) Math.round(samplingDistribution.get(i).getX()* 10000) / 10000;
+			line2.add(rounded4, rounded3);
+		}
 	}
 	
 	/** Add Listeners **/
