@@ -5,11 +5,13 @@ public class Iteration {
 	private Point lower;
 	private Point upper;
 	private Point mid;
+	private double relativeError;
 	
 	public Iteration() {
 		lower = null;
 		upper = null;
 		mid = null;
+		relativeError = 0;
 	}
 	
 	public void setLower(double x, double y) {
@@ -46,6 +48,14 @@ public class Iteration {
 	
 	public void setMid(Point mid) {
 		this.mid = mid;
+	}
+	
+	public double getRelativeError() {
+		return relativeError;
+	}
+	
+	public void setRelativeError(double relativeError) {
+		this.relativeError = relativeError;
 	}
 	
 }
