@@ -4,9 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import models.BisectionComputation;
+import models.BisectionOutput;
 import models.SecantComputation;
 import models.objects.Point;
 import models.objects.ProjectInput;
+import models.objects.Term;
 
 import views.MainView;
 
@@ -45,6 +48,17 @@ public class SubmitActionListener implements ActionListener {
 		for (Point pairAns : pair) {
 			System.out.print(pairAns.getX());
 			System.out.print("                        " + pairAns.getY() + "\n");
+		}
+	}
+	
+	private void bisectionMethod(ProjectInput input) {
+		ArrayList<BisectionOutput> testCases = new ArrayList<BisectionOutput>();
+		
+		testCases.add(BisectionComputation.computeBisectionOutput(input.getPolynomial(), input.getX0(), input.getX1(),
+				(int) input.getThreshold().getValue(), (int) input.getIteration().getValue()));
+		
+		for (BisectionOutput bo : testCases) {
+			bo.displayBisectionOutput();
 		}
 	}
 	
