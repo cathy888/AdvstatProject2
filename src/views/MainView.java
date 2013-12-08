@@ -123,6 +123,7 @@ public class MainView extends JFrame {
 		panPoint.add(lblX0);
 		
 		txtX0 = new JTextField();
+		txtX0.setHorizontalAlignment(SwingConstants.CENTER);
 		txtX0.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtX0.setColumns(5);
 		panPoint.add(txtX0);
@@ -132,6 +133,7 @@ public class MainView extends JFrame {
 		panPoint.add(lblX1);
 		
 		txtX1 = new JTextField();
+		txtX1.setHorizontalAlignment(SwingConstants.CENTER);
 		txtX1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtX1.setColumns(5);
 		panPoint.add(txtX1);
@@ -289,7 +291,7 @@ public class MainView extends JFrame {
 		for (Entry<Double, Double> entry : map.entrySet()) {
 			Term term = new Term();
 			
-			if (entry.getValue() <= 0) {
+			if (entry.getValue() != 0) {
 				term.setPower(entry.getKey());
 				term.setNumber(entry.getValue());
 				
