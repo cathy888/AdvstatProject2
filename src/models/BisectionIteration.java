@@ -1,5 +1,7 @@
 package models;
 
+import models.objects.Point;
+
 
 public class BisectionIteration{
 	Point a;

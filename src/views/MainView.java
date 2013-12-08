@@ -33,9 +33,9 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import models.Limit;
-import models.Term;
-import models.ProjectInput;
+import models.objects.Limit;
+import models.objects.ProjectInput;
+import models.objects.Term;
 
 public class MainView extends JFrame {
 	

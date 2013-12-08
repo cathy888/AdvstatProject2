@@ -1,6 +1,9 @@
 package models;
 
 import java.util.ArrayList;
+
+import models.objects.Point;
+import models.objects.Term;
 import static java.lang.Math.pow;
 
 public class SecantComputation {

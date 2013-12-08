@@ -2,6 +2,8 @@ package models;
 
 import java.util.ArrayList;
 
+import models.objects.Point;
+
 public class BisectionOutput {
 	private ArrayList<BisectionIteration> outputs;
 	private double tolerance;

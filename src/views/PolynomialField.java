@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.SwingConstants;
 
-import models.Term;
+import models.objects.Term;
 
 public class PolynomialField extends JPanel {
 	

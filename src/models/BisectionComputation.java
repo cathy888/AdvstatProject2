@@ -2,6 +2,9 @@ package models;
 
 import java.util.ArrayList;
 
+import models.objects.Point;
+import models.objects.Term;
+
 public class BisectionComputation {
 	/*
 	 * returns null if invalid input

@@ -2,9 +2,9 @@ import java.util.ArrayList;
 
 import models.BisectionComputation;
 import models.BisectionOutput;
-import models.Point;
 import models.SecantComputation;
-import models.Term;
+import models.objects.Point;
+import models.objects.Term;
 
 public class test {
 	public static void main(String[] args) {
