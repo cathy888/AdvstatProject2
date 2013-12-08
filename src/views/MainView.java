@@ -10,6 +10,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
@@ -33,6 +34,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import models.objects.Iteration;
 import models.objects.Limit;
 import models.objects.ProjectInput;
 import models.objects.Term;
@@ -221,9 +223,20 @@ public class MainView extends JFrame {
 		adjuster.setDynamicAdjustment(true);
 	}
 	
+	public void addRows(ArrayList<Iteration> iterations) {
+		for (Iteration iteration : iterations) {
+			addRow(iteration);
+		}
+	}
+	
 	/* Add Row to Table */
-	public void addRow() {
-		
+	public void addRow(Iteration iteration) {
+		tableModel.addRow(new Object[] {
+				tableModel.getRowCount() + 1, iteration.getLower().getX(),
+				iteration.getUpper().getX(), iteration.getMid().getX(),
+				iteration.getLower().getY(), iteration.getUpper().getY(),
+				iteration.getMid().getY(), iteration.getRelativeError()
+		});
 	}
 	
 	/* Add a Polynomial Field */
