@@ -209,7 +209,7 @@ public class MainView extends JFrame {
 		panRight.add(scpTable, BorderLayout.CENTER);
 		
 		tableModel = new DefaultTableModel(new Object[][] {},
-				new String[] { "Lower Root", "Upper Root", "Middle Root",
+				new String[] { "Iteration", "Lower Root", "Upper Root", "Middle Root",
 						"f( Lower Root )", "f( Upper Root )", "f( Middle Root )",
 						"Relative Error" });
 		
@@ -219,6 +219,11 @@ public class MainView extends JFrame {
 		
 		TableColumnAdjuster adjuster = new TableColumnAdjuster(table);
 		adjuster.setDynamicAdjustment(true);
+	}
+	
+	/* Add Row to Table */
+	public void addRow() {
+		
 	}
 	
 	/* Add a Polynomial Field */
