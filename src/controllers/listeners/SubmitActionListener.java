@@ -9,7 +9,6 @@ import models.BisectionOutput;
 import models.SecantComputation;
 import models.objects.Point;
 import models.objects.ProjectInput;
-import models.objects.Term;
 
 import views.MainView;
 
