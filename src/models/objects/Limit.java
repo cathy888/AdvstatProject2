@@ -7,7 +7,7 @@ public class Limit {
 	
 	public Limit() {
 		enabled = false;
-		value = 0;
+		value = -1;
 	}
 	
 	public boolean isEnabled() {
