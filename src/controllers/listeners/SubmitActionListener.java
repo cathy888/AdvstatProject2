@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import models.BisectionComputation;
 import models.BisectionOutput;
+import models.InputValidation;
 import models.SecantComputation;
 import models.objects.Point;
 import models.objects.ProjectInput;
@@ -22,7 +23,26 @@ public class SubmitActionListener implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
+		ProjectInput input = null;
 		
+		try {
+			input = view.getInput();
+			
+			if (InputValidation.validateInput(input)) {
+				if (view.getSelectedMethod().equals("Bisection Method")) {
+					bisectionMethod(input);
+				}
+				else if (view.getSelectedMethod().equals("Secant Method")) {
+					secantMethod(input);
+				}
+			}
+			else {
+				System.out.println("Invalid input.");
+			}
+		}
+		catch (Exception e) {
+			System.out.println("Something went wrong");
+		}
 	}
 	
 	private void secantMethod(ProjectInput input) {
