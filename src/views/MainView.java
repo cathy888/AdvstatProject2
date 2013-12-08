@@ -305,14 +305,18 @@ public class MainView extends JFrame {
 		
 		/* Get Iterations */
 		Limit iteration = new Limit();
-		iteration.setEnabled(chkbxIterations.isSelected());
-		iteration.setValue(Double.parseDouble(spinIterations.getValue().toString()));
+		if (chkbxIterations.isSelected()) {
+			iteration.setEnabled(true);
+			iteration.setValue(Double.parseDouble(spinIterations.getValue().toString()));
+		}
 		input.setIteration(iteration);
 		
 		/* Get Threshold */
 		Limit threshold = new Limit();
-		threshold.setEnabled(chkbxThreshold.isSelected());
-		threshold.setValue(Double.parseDouble(txtThreshold.getText().toString()));
+		if (chkbxThreshold.isSelected()) {
+			threshold.setEnabled(true);
+			threshold.setValue(Double.parseDouble(txtThreshold.getText().toString()));
+		}
 		input.setThreshold(threshold);
 		
 		return input;
