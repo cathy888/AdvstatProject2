@@ -280,6 +280,22 @@ public class MainView extends JFrame {
 		}
 	}
 	
+	/* Toggle Table */
+	public void setTableBisection(boolean b) {
+		if (b) {
+			tableModel = new DefaultTableModel(new Object[][] {},
+					new String[] { "Iteration", "Lower Root", "Upper Root", "Middle Root",
+							"f( Lower Root )", "f( Upper Root )", "f( Middle Root )",
+							"Relative Error" });
+		}
+		else {
+			tableModel = new DefaultTableModel(new Object[][] {},
+					new String[] { "Iteration", "Middle Root", "f( Middle Root )",
+							"Relative Error" });
+		}
+		table.setModel(tableModel);
+	}
+	
 	/* Toggle Method Button */
 	public void setBisection(boolean b) {
 		if (b) {
@@ -288,6 +304,8 @@ public class MainView extends JFrame {
 		else {
 			btnBisectionMethod.setText("Secant Method");
 		}
+		setIntervalMode(b);
+		setTableBisection(b);
 	}
 	
 	/* Get Selected Method */
@@ -399,6 +417,7 @@ public class MainView extends JFrame {
 		renderer.setBaseShapesFilled(true);
 		
 		ChartPanel panel = new ChartPanel(chart);
+		panel.setPreferredSize(new Dimension());
 		
 		return panel;
 	}

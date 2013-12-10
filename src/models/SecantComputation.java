@@ -2,90 +2,132 @@ package models;
 
 import java.util.ArrayList;
 
+import models.objects.Iteration;
 import models.objects.Point;
 import models.objects.Term;
 import static java.lang.Math.pow;
 
 public class SecantComputation {
 
-	public static ArrayList<Point> secantIteration(ArrayList<Term> Poly, double x0, double x1, int iteration) {
-		ArrayList<Point> Ans = new ArrayList<Point>();
+	public static ArrayList<Iteration> secantIteration(ArrayList<Term> Poly, double x0, double x1, int iteration) {
+		ArrayList<Iteration> Ans = new ArrayList<Iteration>();
+		
 		double newX = 0;
 		int current = 0;
+		double error = -1;
 		// X0, X1
-		Ans.add(new Point(x0, findY(Poly, x0)));
-		Ans.add(new Point(x1, findY(Poly, x1)));
+		
+		Iteration oneAns = new Iteration();
+		oneAns.setMid(new Point(x0, findY(Poly, x0)));
+		oneAns.setRelativeError(error);
+		Ans.add(oneAns);
+		oneAns = new Iteration();
+		oneAns.setMid(new Point(x1, findY(Poly, x1)));
+		error = (x1 - x0) / x1;
+		if (error < 0)
+			error = error * -1;
+		oneAns.setRelativeError(error);
+		Ans.add(oneAns);
+		/*System.out.println(Ans.get(0).getRelativeError());
+		System.out.println(Ans.get(1).getRelativeError());*/
 		current++;
-
+		
 		for (int i = 2; i <= iteration; i++) {
-			newX = Ans.get(current).getX()
-					- ((Ans.get(current).getY() * (Ans.get(current - 1).getX() - Ans
-							.get(current).getX())) / (Ans.get(current - 1)
-							.getY() - Ans.get(current).getY()));
-			Ans.add(new Point(newX, findY(Poly, newX)));
+			newX = Ans.get(current).getMid().getX()
+					- ((Ans.get(current).getMid().getY() * (Ans.get(current - 1).getMid().getX() - Ans
+							.get(current).getMid().getX())) / (Ans.get(current - 1).
+							getMid().getY() - Ans.get(current).getMid().getY()));
+			
+			oneAns = new Iteration();
+			oneAns.setMid(new Point(newX, findY(Poly, newX)));
+			Ans.add(oneAns);
 			current++;
+			error = (Ans.get(current).getMid().getX() - Ans.get(current - 1).getMid().getX())
+					/ Ans.get(current).getMid().getX();
+			if (error < 0)
+				error = error * -1;
+			Ans.get(current).setRelativeError(error);
+			
+			
 		}
 
 		return Ans;
 	}
 
-	public static ArrayList<Point> secantThreshold(ArrayList<Term> Poly, double x0, double x1, double threshold) {
-		ArrayList<Point> Ans = new ArrayList<Point>();
+	public static ArrayList<Iteration> secantThreshold(ArrayList<Term> Poly, double x0, double x1, double threshold) {
+		ArrayList<Iteration> Ans = new ArrayList<Iteration>();
 		double newX = 0;
 		int current = 0;
-		double temp = 0;
+		double error = -1;
 		// X0, X1
-		Ans.add(new Point(x0, findY(Poly, x0)));
-		Ans.add(new Point(x1, findY(Poly, x1)));
-		temp = (x1 - x0) / x1;
-		if (temp < 0)
-			temp = temp * -1;
+		Iteration oneAns = new Iteration();
+		oneAns.setMid(new Point(x0, findY(Poly, x0)));
+		oneAns.setRelativeError(error);
+		Ans.add(oneAns);
+		oneAns = new Iteration();
+		oneAns.setMid(new Point(x1, findY(Poly, x1)));
+		
+		error = (x1 - x0) / x1;
+		if (error < 0)
+			error = error * -1;
+		oneAns.setRelativeError(error);
+		Ans.add(oneAns);
 		current++;
 
-		while (temp > threshold) {
-			newX = Ans.get(current).getX()
-					- ((Ans.get(current).getY() * (Ans.get(current - 1).getX() - Ans
-							.get(current).getX())) / (Ans.get(current - 1)
-							.getY() - Ans.get(current).getY()));
-			Ans.add(new Point(newX, findY(Poly, newX)));
+		while (error > threshold) {
+			newX = Ans.get(current).getMid().getX()
+					- ((Ans.get(current).getMid().getY() * (Ans.get(current - 1).getMid().getX() - Ans
+							.get(current).getMid().getX())) / (Ans.get(current - 1).
+									getMid().getY() - Ans.get(current).getMid().getY()));
+			oneAns = new Iteration();
+			oneAns.setMid(new Point(newX, findY(Poly, newX)));
+			Ans.add(oneAns);
 			current++;
-
-			temp = (Ans.get(current).getX() - Ans.get(current - 1).getX())
-					/ Ans.get(current).getX();
-			if (temp < 0)
-				temp = temp * -1;
+			error = (Ans.get(current).getMid().getX() - Ans.get(current - 1).getMid().getX())
+					/ Ans.get(current).getMid().getX();
+			if (error < 0)
+				error = error * -1;
+			Ans.get(current).setRelativeError(error);
 		}
 
 		return Ans;
 	}
 
-	public static ArrayList<Point> secantBoth(ArrayList<Term> Poly, double x0, double x1, double threshold, int iteration) {
-		ArrayList<Point> Ans = new ArrayList<Point>();
+	public static ArrayList<Iteration> secantBoth(ArrayList<Term> Poly, double x0, double x1, double threshold, int iteration) {
+		ArrayList<Iteration> Ans = new ArrayList<Iteration>();
 		double newX = 0;
 		int current = 0;
-		double temp = 0;
+		double error = -1;
 		int i = 2;
 		// X0, X1
-		Ans.add(new Point(x0, findY(Poly, x0)));
-		Ans.add(new Point(x1, findY(Poly, x1)));
-		temp = (x1 - x0) / x1;
-		if (temp < 0)
-			temp = temp * -1;
+		Iteration oneAns = new Iteration();
+		oneAns.setMid(new Point(x0, findY(Poly, x0)));
+		oneAns.setRelativeError(error);
+		Ans.add(oneAns);
+		oneAns = new Iteration();
+		oneAns.setMid(new Point(x1, findY(Poly, x1)));
+		error = (x1 - x0) / x1;
+		if (error < 0)
+			error = error * -1;
+		oneAns.setRelativeError(error);
+		Ans.add(oneAns);
 		current++;
 
-		while (temp > threshold && i <= iteration) {
+		while (error > threshold && i <= iteration) {
 			i++;
-			newX = Ans.get(current).getX()
-					- ((Ans.get(current).getY() * (Ans.get(current - 1).getX() - Ans
-							.get(current).getX())) / (Ans.get(current - 1)
-							.getY() - Ans.get(current).getY()));
-			Ans.add(new Point(newX, findY(Poly, newX)));
+			newX = Ans.get(current).getMid().getX()
+					- ((Ans.get(current).getMid().getY() * (Ans.get(current - 1).getMid().getX() - Ans
+							.get(current).getMid().getX())) / (Ans.get(current - 1)
+							.getMid().getY() - Ans.get(current).getMid().getY()));
+			oneAns = new Iteration();
+			oneAns.setMid(new Point(newX, findY(Poly, newX)));
+			Ans.add(oneAns);
 			current++;
-
-			temp = (Ans.get(current).getX() - Ans.get(current - 1).getX())
-					/ Ans.get(current).getX();
-			if (temp < 0)
-				temp = temp * -1;
+			error = (Ans.get(current).getMid().getX() - Ans.get(current - 1).getMid().getX())
+					/ Ans.get(current).getMid().getX();
+			if (error < 0)
+				error = error * -1;
+			Ans.get(current).setRelativeError(error);
 
 		}
 

@@ -8,9 +8,8 @@ import models.BisectionComputation;
 import models.BisectionOutput;
 import models.InputValidation;
 import models.SecantComputation;
-import models.objects.Point;
+import models.objects.Iteration;
 import models.objects.ProjectInput;
-
 import views.MainView;
 
 public class SubmitActionListener implements ActionListener {
@@ -26,10 +25,11 @@ public class SubmitActionListener implements ActionListener {
 		ProjectInput input = null;
 		
 		try {
+			boolean bisection = view.getSelectedMethod().equals("Bisection Method");
 			input = view.getInput();
 			
-			if (InputValidation.validateInput(input)) {
-				if (view.getSelectedMethod().equals("Bisection Method")) {
+			if (InputValidation.validateInput(bisection, input)) {
+				if (bisection) {
 					bisectionMethod(input);
 				}
 				else if (view.getSelectedMethod().equals("Secant Method")) {
@@ -46,7 +46,7 @@ public class SubmitActionListener implements ActionListener {
 	}
 	
 	private void secantMethod(ProjectInput input) {
-		ArrayList<Point> pair = new ArrayList<Point>();
+		ArrayList<Iteration> pair = new ArrayList<Iteration>();
 		
 		if (input.getIteration().isEnabled() && input.getThreshold().isEnabled()) {
 			pair = SecantComputation.secantBoth(input.getPolynomial(), input.getX0(), input.getX1(),
@@ -64,9 +64,10 @@ public class SubmitActionListener implements ActionListener {
 			return;
 		}
 		
-		for (Point pairAns : pair) {
-			System.out.print(pairAns.getX());
-			System.out.print("                        " + pairAns.getY() + "\n");
+		for (Iteration pairAns : pair) {
+			System.out.print(pairAns.getMid().getX());
+			System.out.print("                        " + pairAns.getMid().getY() + "\n");
+			System.out.print("                        " + pairAns.getRelativeError() + "\n");
 		}
 	}
 	

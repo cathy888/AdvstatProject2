@@ -15,9 +15,7 @@ public class MethodActionListener implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		boolean b = !view.getSelectedMethod().equals("Bisection Method");
-		view.setBisection(b);
-		view.setIntervalMode(b);
+		view.setBisection(!view.getSelectedMethod().equals("Bisection Method"));
 	}
 	
 	public void setView(MainView view) {

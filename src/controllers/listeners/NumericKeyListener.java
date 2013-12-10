@@ -25,7 +25,7 @@ public class NumericKeyListener implements KeyListener {
 		}
 		
 		/* Check if text is numeric only (maybe with .s) */
-		text = text.replaceAll("[^\\d.]", "");
+		text = text.replaceAll("[^\\d.-]", "");
 		
 		/* Set text */
 		if (event.getSource().getClass() == JTextField.class) {
