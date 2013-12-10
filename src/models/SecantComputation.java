@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import models.objects.Iteration;
 import models.objects.Point;
 import models.objects.Term;
-import static java.lang.Math.pow;
 
 public class SecantComputation {
 
@@ -18,11 +17,11 @@ public class SecantComputation {
 		// X0, X1
 		
 		Iteration oneAns = new Iteration();
-		oneAns.setMid(new Point(x0, findY(Poly, x0)));
+		oneAns.setMid(new Point(x0, SharedComputation.findY(Poly, x0)));
 		oneAns.setRelativeError(error);
 		Ans.add(oneAns);
 		oneAns = new Iteration();
-		oneAns.setMid(new Point(x1, findY(Poly, x1)));
+		oneAns.setMid(new Point(x1, SharedComputation.findY(Poly, x1)));
 		error = (x1 - x0) / x1;
 		if (error < 0)
 			error = error * -1;
@@ -39,16 +38,21 @@ public class SecantComputation {
 							getMid().getY() - Ans.get(current).getMid().getY()));
 			
 			oneAns = new Iteration();
-			oneAns.setMid(new Point(newX, findY(Poly, newX)));
+			oneAns.setMid(new Point(newX, SharedComputation.findY(Poly, newX)));
 			Ans.add(oneAns);
 			current++;
 			error = (Ans.get(current).getMid().getX() - Ans.get(current - 1).getMid().getX())
 					/ Ans.get(current).getMid().getX();
-			if (error < 0)
+			
+			if (error < 0) {
 				error = error * -1;
+			}
+			
 			Ans.get(current).setRelativeError(error);
 			
-			
+			if (error == 0.0) {
+				break;
+			}
 		}
 
 		return Ans;
@@ -61,11 +65,11 @@ public class SecantComputation {
 		double error = -1;
 		// X0, X1
 		Iteration oneAns = new Iteration();
-		oneAns.setMid(new Point(x0, findY(Poly, x0)));
+		oneAns.setMid(new Point(x0, SharedComputation.findY(Poly, x0)));
 		oneAns.setRelativeError(error);
 		Ans.add(oneAns);
 		oneAns = new Iteration();
-		oneAns.setMid(new Point(x1, findY(Poly, x1)));
+		oneAns.setMid(new Point(x1, SharedComputation.findY(Poly, x1)));
 		
 		error = (x1 - x0) / x1;
 		if (error < 0)
@@ -80,7 +84,7 @@ public class SecantComputation {
 							.get(current).getMid().getX())) / (Ans.get(current - 1).
 									getMid().getY() - Ans.get(current).getMid().getY()));
 			oneAns = new Iteration();
-			oneAns.setMid(new Point(newX, findY(Poly, newX)));
+			oneAns.setMid(new Point(newX, SharedComputation.findY(Poly, newX)));
 			Ans.add(oneAns);
 			current++;
 			error = (Ans.get(current).getMid().getX() - Ans.get(current - 1).getMid().getX())
@@ -101,11 +105,11 @@ public class SecantComputation {
 		int i = 2;
 		// X0, X1
 		Iteration oneAns = new Iteration();
-		oneAns.setMid(new Point(x0, findY(Poly, x0)));
+		oneAns.setMid(new Point(x0, SharedComputation.findY(Poly, x0)));
 		oneAns.setRelativeError(error);
 		Ans.add(oneAns);
 		oneAns = new Iteration();
-		oneAns.setMid(new Point(x1, findY(Poly, x1)));
+		oneAns.setMid(new Point(x1, SharedComputation.findY(Poly, x1)));
 		error = (x1 - x0) / x1;
 		if (error < 0)
 			error = error * -1;
@@ -120,7 +124,7 @@ public class SecantComputation {
 							.get(current).getMid().getX())) / (Ans.get(current - 1)
 							.getMid().getY() - Ans.get(current).getMid().getY()));
 			oneAns = new Iteration();
-			oneAns.setMid(new Point(newX, findY(Poly, newX)));
+			oneAns.setMid(new Point(newX, SharedComputation.findY(Poly, newX)));
 			Ans.add(oneAns);
 			current++;
 			error = (Ans.get(current).getMid().getX() - Ans.get(current - 1).getMid().getX())
@@ -132,15 +136,5 @@ public class SecantComputation {
 		}
 
 		return Ans;
-	}
-
-	public static double findY(ArrayList<Term> Poly, double x) {
-		double y = 0;
-
-		for (Term poly : Poly) {
-			y += poly.getNumber() * pow(x, poly.getPower());
-		}
-
-		return y;
 	}
 }

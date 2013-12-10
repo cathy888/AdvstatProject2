@@ -82,7 +82,7 @@ public class MainView extends JFrame {
 	/* Constructor */
 	public MainView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setMinimumSize(new Dimension(300, 100));
+		setMinimumSize(new Dimension(650, 450));
 		setSize(650, 450);
 		setLocationRelativeTo(null);
 		
@@ -241,21 +241,38 @@ public class MainView extends JFrame {
 		
 		TableColumnAdjuster adjuster = new TableColumnAdjuster(table);
 		adjuster.setDynamicAdjustment(true);
+		
+		panGraph.add(createGraphPanel(), BorderLayout.CENTER);
 	}
 	
 	/* Add Rows to Table */
 	public void addRows(ArrayList<Iteration> iterations) {
-		for (Iteration iteration : iterations) {
-			addRow(iteration);
+		if (getSelectedMethod().equals("Bisection Method")) {
+			for (Iteration iteration : iterations) {
+				addBisectionRow(iteration);
+			}
+		}
+		else if (getSelectedMethod().equals("Secant Method")) {
+			for (Iteration iteration : iterations) {
+				addSecantRow(iteration);
+			}
 		}
 	}
 	
 	/* Add Row to Table */
-	public void addRow(Iteration iteration) {
+	public void addBisectionRow(Iteration iteration) {
 		tableModel.addRow(new Object[] {
 				tableModel.getRowCount() + 1, iteration.getLower().getX(),
 				iteration.getUpper().getX(), iteration.getMid().getX(),
 				iteration.getLower().getY(), iteration.getUpper().getY(),
+				iteration.getMid().getY(), iteration.getRelativeError()
+		});
+	}
+	
+	/* Add Row to Table */
+	public void addSecantRow(Iteration iteration) {
+		tableModel.addRow(new Object[] {
+				tableModel.getRowCount() + 1,  iteration.getMid().getX(),
 				iteration.getMid().getY(), iteration.getRelativeError()
 		});
 	}
@@ -390,12 +407,18 @@ public class MainView extends JFrame {
 		txtThreshold.setText("");
 		chkbxIterations.setSelected(true);
 		chkbxThreshold.setSelected(true);
+		line1.clear();
+		line2.clear();
+		
+		while (tableModel.getRowCount() > 0) {
+			tableModel.removeRow(0);
+		}
 	}
 	
 	/* Create a Graph */
 	private ChartPanel createGraphPanel() {
-		line1 = new XYSeries("X");
-		line2 = new XYSeries("Y");
+		line1 = new XYSeries("Polynomial");
+		line2 = new XYSeries("Iteration");
 		
 		XYSeriesCollection xyDataset = new XYSeriesCollection();
 		xyDataset.addSeries(line1);
@@ -417,26 +440,18 @@ public class MainView extends JFrame {
 		renderer.setBaseShapesFilled(true);
 		
 		ChartPanel panel = new ChartPanel(chart);
-		panel.setPreferredSize(new Dimension());
+		panel.setPreferredSize(new Dimension(180, 250));
 		
 		return panel;
 	}
 	
 	/* Update Graph Data */
-	public void updateGraphData(ArrayList<Point> newPair, ArrayList<Point> samplingDistribution) {
-		line1.clear();
-		
-		for (int i = 0; i <newPair.size(); i++) {
-			double rounded = (double) Math.round(newPair.get(i).getY()* 10000) / 10000;
-			line1.add(newPair.get(i).getX(), rounded);
+	public void updateGraphData(int line, Point point) {
+		if (line == 1) {
+			line1.add(point.getX(), point.getY());
 		}
-		
-		line2.clear();
-		
-		for (int i = 0; i <samplingDistribution.size(); i++) {
-			double rounded3 = (double) Math.round(samplingDistribution.get(i).getY()* 10000) / 10000;
-			double rounded4 = (double) Math.round(samplingDistribution.get(i).getX()* 10000) / 10000;
-			line2.add(rounded4, rounded3);
+		else if (line == 2) {
+			line2.add(point.getX(), point.getY());
 		}
 	}
 	

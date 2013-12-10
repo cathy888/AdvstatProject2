@@ -2,6 +2,7 @@ package models;
 
 import java.util.ArrayList;
 
+import models.objects.Iteration;
 import models.objects.Point;
 import models.objects.Term;
 
@@ -9,53 +10,63 @@ public class BisectionComputation {
 	/*
 	 * returns null if invalid input
 	 */
-	public static BisectionOutput computeBisectionOutput(ArrayList<Term> polynomial, double aX, double bX, int tolerance, int iterationLimit) {
-		Point a = new Point(aX, SecantComputation.findY(polynomial, aX));
-		Point b = new Point(bX, SecantComputation.findY(polynomial, bX));
+	public static ArrayList<Iteration> computeBisectionOutput(ArrayList<Term> polynomial, double aX, double bX, int tolerance, int iterationLimit) {
+		Point a = new Point(aX, SharedComputation.findY(polynomial, aX));
+		Point b = new Point(bX, SharedComputation.findY(polynomial, bX));
 		if (iterationLimit == -1) {
 			iterationLimit = 1000;
 		}
-
-		if (!(a.getY() > 0 && b.getY() < 0 || a.getY() < 0 && b.getY() > 0)
-				&& tolerance > 0) {
+		
+		if (!(a.getY() > 0 && b.getY() < 0 || a.getY() < 0 && b.getY() > 0) && tolerance > 0) {
 			return null;
 		}
+		
 		if (a.getY() > 0 && b.getY() < 0) {
 			Point temp = a;
 			a = b;
 			b = temp;
 		}
 		
-		BisectionOutput result = new BisectionOutput();
+		ArrayList<Iteration> result = new ArrayList<>();
 		
-		double midX = (a.getX()+b.getX())/2;
-		Point mid = new Point(midX,SecantComputation.findY(polynomial, midX));
+		double midX = (a.getX() + b.getX()) / 2;
+		Point mid = new Point(midX, SharedComputation.findY(polynomial, midX));
 		
-		result.insertIteration(a, b, mid);
-
+		Iteration iteration = new Iteration();
+		iteration.setLower(a);
+		iteration.setUpper(b);
+		iteration.setMid(mid);
+		result.add(iteration);
+		
 		if (mid.getY() == 0) {
 			return result;
 		}
-		int iteration = 0;
+		
+		int i = 0;
 		double tol = Math.pow(10, tolerance);
-
+		
 		do {
 			// choose new side of the binary split
-			iteration++;
+			i++;
 			if (mid.getY() > 0) {
 				b = mid;
-			} else if (mid.getY() < 0) {
+			}
+			else if (mid.getY() < 0) {
 				a = mid;
 			}
 
 			// get new iteration midpoint
 			midX = (a.getX() + b.getX()) / 2;
-			mid = new Point(midX, SecantComputation.findY(polynomial, midX));
-
-			result.insertIteration(a, b, mid);
-		}while( !isMidPointExactRoot(mid) && !arePointsEqualWithinDecimalTolerance(a,b,tol,tolerance) && !isIterationLimitReached(iterationLimit,iteration));
+			mid = new Point(midX, SharedComputation.findY(polynomial, midX));
+			
+			iteration = new Iteration();
+			iteration.setLower(a);
+			iteration.setUpper(b);
+			iteration.setMid(mid);
+			result.add(iteration);
+		}while( !isMidPointExactRoot(mid) && !arePointsEqualWithinDecimalTolerance(a,b,tol,tolerance) && !isIterationLimitReached(iterationLimit,i));
 		
-		result.computeRelativeError();
+		SharedComputation.computeRelativeError(result);
 		return result;
 	}
 
@@ -90,5 +101,5 @@ public class BisectionComputation {
 
 		return false;
 	}
-
+	
 }
