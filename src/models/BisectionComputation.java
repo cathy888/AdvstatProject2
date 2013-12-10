@@ -22,7 +22,7 @@ public class BisectionComputation {
 			b = temp;
 		}
 		
-		BisectionOutput result = new BisectionOutput(tolerance);
+		BisectionOutput result = new BisectionOutput();
 		
 		double midX = (a.getX()+b.getX())/2;
 		Point mid = new Point(midX,SecantComputation.findY(polynomial, midX));
@@ -51,6 +51,7 @@ public class BisectionComputation {
 			result.insertIteration(a, b, mid);
 		}while( !isMidPointExactRoot(mid) && !arePointsEqualWithinDecimalTolerance(a,b,tol,tolerance) && !isIterationLimitReached(iterationLimit,iteration));
 		
+		result.computeRelativeError();
 		return result;
 	}
 	

@@ -2,9 +2,10 @@ package models;
 
 
 public class BisectionIteration{
-	Point a;
-	Point b;
-	Point mid;
+	private Point a;
+	private Point b;
+	private Point mid;
+	private double relativeError;
 	
 	public BisectionIteration(Point a, Point b, Point mid){
 		this.a = a;
@@ -21,5 +22,14 @@ public class BisectionIteration{
 	public Point getMid(){
 		return mid;
 	}
+	
+	public void setRelativeError(double relativeError){
+		this.relativeError = relativeError;
+	}
+	public double getRelativeError(){
+		return relativeError;
+	}
+	
+	
 		
 }
