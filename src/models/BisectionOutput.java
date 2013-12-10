@@ -6,11 +6,9 @@ import models.objects.Point;
 
 public class BisectionOutput {
 	private ArrayList<BisectionIteration> outputs;
-	private double tolerance;
-
-	public BisectionOutput(int tolerance) {
+	
+	public BisectionOutput(){
 		this.outputs = new ArrayList<BisectionIteration>();
-		this.tolerance = tolerance;
 	}
 
 	public void insertIteration(Point a, Point b, Point mid) {
@@ -20,30 +18,35 @@ public class BisectionOutput {
 	public ArrayList<BisectionIteration> getList() {
 		return outputs;
 	}
-
-	public double getRoot() {
-		BisectionIteration lastIteration = outputs.get(outputs.size() - 1);
-		Point a = lastIteration.getA();
-		if (this.tolerance != -1) {
-			double tol = Math.pow(10, this.tolerance);
-			return Math.round(a.getX() * tol) / tol;
-		}
-		return a.getX();
-	}
-
-	public void displayBisectionOutput() {
-		System.out
-				.println("<<<<<<<<<<START-OF-BISECTION-OUTPUT>>>>>>>>>> \n \titerationCount: "
-						+ outputs.size());
-		for (BisectionIteration i : outputs) {
-			System.out
-					.printf("iteration[%d]: a= %.4f  mid= %.4f  b= %.4f |f(a)= %.4f f(mid)= %.4f f(b)= %.4f\n",
-							outputs.indexOf(i) + 1, i.getA().getX(), i.getMid()
-									.getX(), i.getB().getX(), i.getA().getY(),
-							i.getMid().getY(), i.getB().getY());
-
+	
+	public void displayBisectionOutput(){
+		System.out.println("<<<<<<<<<<START-OF-BISECTION-OUTPUT>>>>>>>>>> \nITERATIONCOUNT: "+outputs.size());
+		for(BisectionIteration i : outputs){
+			System.out.printf("iteration[%d]\t: a= %.4f \t mid= %.4f \t b= %.4f \t f(a)= %.4f \t f(mid)= %.4f \t f(b)= %.4f \t e = %.4f\n"
+					,outputs.indexOf(i)+1,
+					i.getA().getX(),i.getMid().getX(),i.getB().getX(),
+					i.getA().getY(),i.getMid().getY(),i.getB().getY(),
+					i.getRelativeError());
+		
 		}
 		System.out.println("<<<<<<<<<<END-OF-BISECTION-OUTPUT>>>>>>>>>>");
 	}
-
+	
+	public void computeRelativeError(){
+		double error;
+		for(BisectionIteration currentIteration : outputs){
+			//skip first iteration
+			if(outputs.indexOf(currentIteration)!=0){
+				BisectionIteration previousIteration = outputs.get(outputs.indexOf(currentIteration)-1);
+				error = currentIteration.getMid().getX() - previousIteration.getMid().getX();
+				if(error<0){
+					error *=-1;
+				}
+				currentIteration.setRelativeError(error);
+			}else{
+				currentIteration.setRelativeError(0);
+			}
+		}
+	}
+		
 }
