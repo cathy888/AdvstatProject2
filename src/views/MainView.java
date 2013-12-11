@@ -444,10 +444,11 @@ public class MainView extends JFrame {
 		setGraphLines(b);
 		
 		XYSeriesCollection xyDataset = new XYSeriesCollection();
-		xyDataset.addSeries(line1);
 		xyDataset.addSeries(line2);
 		xyDataset.addSeries(line3);
 		xyDataset.addSeries(line4);
+		xyDataset.addSeries(line1);
+
 		
 		JFreeChart chart = ChartFactory.createXYLineChart("", "x", "f(x)",
 				xyDataset, PlotOrientation.VERTICAL, true, true, false);
