@@ -67,16 +67,16 @@ public class SubmitActionListener implements ActionListener {
 			map.put(iteration.getMid().getX(), iteration.getMid().getY());
 		}
 		
-		double i = input.getX0() + 0.1;
+		double i = Math.floor(map.firstKey()) + 0.5;
 		
 		for (Map.Entry<Double, Double> entry : map.entrySet()) {
 			while (i < entry.getKey() && i <= input.getX1()) {
 				Point point = new Point();
-				point.setX(entry.getKey());
-				point.setY(entry.getValue());
+				point.setX(i);
+				point.setY(SharedComputation.findY(input.getPolynomial(), i));
 				view.updateGraphData(1, point);
 				
-				i = i + 0.1;
+				i = i + 0.5;
 			}
 			
 			Point point = new Point();
@@ -93,7 +93,7 @@ public class SubmitActionListener implements ActionListener {
 			map.put(iteration.getMid().getX(), iteration.getMid().getY());
 		}
 		
-		double i = map.firstKey() + 0.5;
+		double i = Math.floor(map.firstKey()) + 0.5;
 		
 		for (Map.Entry<Double, Double> entry : map.entrySet()) {
 			while (i < entry.getKey() && i <= input.getX1()) {

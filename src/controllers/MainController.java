@@ -5,6 +5,7 @@ import controllers.listeners.ClearActionListener;
 import controllers.listeners.MethodActionListener;
 import controllers.listeners.NumericKeyListener;
 import controllers.listeners.SubmitActionListener;
+import controllers.listeners.TableMouseListener;
 
 public class MainController {
 	
@@ -31,6 +32,10 @@ public class MainController {
 		
 		NumericKeyListener numericListener = new NumericKeyListener();
 		view.addNumericListeners(numericListener);
+		
+		TableMouseListener tableListener = new TableMouseListener();
+		tableListener.setView(view);
+		view.addTableListener(tableListener);
 	}
 	
 }

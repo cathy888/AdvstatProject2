@@ -10,6 +10,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -331,8 +332,8 @@ public class MainView extends JFrame {
 	public void setGraphLines(boolean b) {
 		if (b) {
 			line2 = new XYSeries("Lower");
-			line3 = new XYSeries("Mid");
-			line4 = new XYSeries("Upper");
+			line3 = new XYSeries("Upper");
+			line4 = new XYSeries("Mid");
 		}
 		else {
 			line2 = new XYSeries("Xi-2");
@@ -479,6 +480,42 @@ public class MainView extends JFrame {
 		}
 	}
 	
+	/* Plot Graph Points */
+	public void plotGraphPoints(Iteration iteration) {
+		line2.clear();
+		line3.clear();
+		line4.clear();
+
+		if (iteration.getLower() != null) {
+			line2.add(iteration.getLower().getX(), iteration.getLower().getY());
+		}
+		if (iteration.getUpper() != null) {
+			line3.add(iteration.getUpper().getX(), iteration.getUpper().getY());
+		}
+		line4.add(iteration.getMid().getX(), iteration.getMid().getY());
+	}
+	
+	/* Get Table Selected Iteration */
+	public Iteration getSelectedIteration() {
+		Iteration iteration = null;
+		int row = table.getSelectedRow();
+		
+		if (row > -1) {
+			iteration = new Iteration();
+			if (btnBisectionMethod.getText().equals("Bisection Method")) {
+				iteration.setLower(Double.parseDouble("" + tableModel.getValueAt(row, tableModel.findColumn("Lower Root"))),
+						Double.parseDouble("" + tableModel.getValueAt(row, tableModel.findColumn("f( Lower Root )"))));
+				iteration.setUpper(Double.parseDouble("" + tableModel.getValueAt(row, tableModel.findColumn("Upper Root"))),
+						Double.parseDouble("" + tableModel.getValueAt(row, tableModel.findColumn("f( Upper Root )"))));
+			}
+			iteration.setMid(Double.parseDouble("" + tableModel.getValueAt(row, tableModel.findColumn("Middle Root"))),
+					Double.parseDouble("" + tableModel.getValueAt(row, tableModel.findColumn("f( Middle Root )"))));
+			iteration.setRelativeError(Double.parseDouble("" + tableModel.getValueAt(row, tableModel.findColumn("Relative Error"))));
+		}
+		
+		return iteration;
+	}
+	
 	/** Add Listeners **/
 	
 	public void addBtnMethodListener(ActionListener listener) {
@@ -497,6 +534,10 @@ public class MainView extends JFrame {
 		txtX0.addKeyListener(listener);
 		txtX1.addKeyListener(listener);
 		txtThreshold.addKeyListener(listener);
+	}
+	
+	public void addTableListener(MouseListener listener) {
+		table.addMouseListener(listener);
 	}
 	
 }
