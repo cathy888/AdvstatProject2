@@ -11,6 +11,10 @@ public class BisectionOutput {
 	public BisectionOutput(){
 		this.outputs = new ArrayList<Iteration>();
 	}
+	
+	public void setOutputs(ArrayList<Iteration> outputs) {
+		this.outputs = outputs;
+	}
 
 	public void insertIteration(Point a, Point b, Point mid) {
 		Iteration iteration = new Iteration();

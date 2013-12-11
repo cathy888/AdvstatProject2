@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import models.BisectionComputation;
+import models.BisectionOutput;
 import models.InputValidation;
 import models.SecantComputation;
 import models.objects.Iteration;
@@ -36,6 +37,8 @@ public class SubmitActionListener implements ActionListener {
 				
 				if (bisection) {
 					iterations = bisectionMethod(input);
+					BisectionOutput output = new BisectionOutput();
+					output.setOutputs(iterations);
 					graphBisectionPolynomial(input, iterations);
 				}
 				else if (view.getSelectedMethod().equals("Secant Method")) {
@@ -66,7 +69,7 @@ public class SubmitActionListener implements ActionListener {
 		double i = input.getX0() + 0.1;
 		
 		for (Map.Entry<Double, Double> entry : map.entrySet()) {
-			while (i < entry.getKey()) {
+			while (i < entry.getKey() && i <= input.getX1()) {
 				Point point = new Point();
 				point.setX(entry.getKey());
 				point.setY(entry.getValue());
@@ -93,7 +96,9 @@ public class SubmitActionListener implements ActionListener {
 		double i = input.getX0() + 0.1;
 		
 		for (Map.Entry<Double, Double> entry : map.entrySet()) {
-			while (i < entry.getKey()) {
+			while (i < entry.getKey() && i <= input.getX1()) {
+				System.out.println("Key: " + entry.getKey());
+				System.out.println(i);
 				Point point = new Point();
 				point.setX(entry.getKey());
 				point.setY(entry.getValue());
