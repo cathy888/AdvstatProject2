@@ -10,6 +10,7 @@ import models.BisectionComputation;
 import models.BisectionOutput;
 import models.InputValidation;
 import models.SecantComputation;
+import models.SharedComputation;
 import models.objects.Iteration;
 import models.objects.Point;
 import models.objects.ProjectInput;
@@ -26,6 +27,7 @@ public class SubmitActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		ProjectInput input = null;
+		view.clearOutput();
 		
 		try {
 			ArrayList<Iteration> iterations = null;
@@ -33,12 +35,11 @@ public class SubmitActionListener implements ActionListener {
 			input = view.getInput();
 			
 			if (InputValidation.validateInput(bisection, input)) {
-				view.clearFields();
-				
 				if (bisection) {
 					iterations = bisectionMethod(input);
 					BisectionOutput output = new BisectionOutput();
 					output.setOutputs(iterations);
+					output.displayBisectionOutput();
 					graphBisectionPolynomial(input, iterations);
 				}
 				else if (view.getSelectedMethod().equals("Secant Method")) {
@@ -82,7 +83,6 @@ public class SubmitActionListener implements ActionListener {
 			point.setX(entry.getKey());
 			point.setY(entry.getValue());
 			view.updateGraphData(1, point);
-			view.updateGraphData(2, point);
 		}
 	}
 	
@@ -93,25 +93,24 @@ public class SubmitActionListener implements ActionListener {
 			map.put(iteration.getMid().getX(), iteration.getMid().getY());
 		}
 		
-		double i = input.getX0() + 0.1;
+		double i = map.firstKey() + 0.5;
 		
 		for (Map.Entry<Double, Double> entry : map.entrySet()) {
 			while (i < entry.getKey() && i <= input.getX1()) {
 				System.out.println("Key: " + entry.getKey());
 				System.out.println(i);
 				Point point = new Point();
-				point.setX(entry.getKey());
-				point.setY(entry.getValue());
+				point.setX(i);
+				point.setY(SharedComputation.findY(input.getPolynomial(), i));
 				view.updateGraphData(1, point);
 				
-				i = i + 0.1;
+				i = i + 0.5;
 			}
 			
 			Point point = new Point();
 			point.setX(entry.getKey());
 			point.setY(entry.getValue());
 			view.updateGraphData(1, point);
-			view.updateGraphData(2, point);
 		}
 	}
 	
@@ -134,20 +133,20 @@ public class SubmitActionListener implements ActionListener {
 			return null;
 		}
 		
-		/* debugging
+		/* debugging */
 		for (Iteration iteration : iterations) {
 			System.out.print(iteration.getMid().getX());
 			System.out.print("\t\t" + iteration.getMid().getY());
 			System.out.print("\t\t" + iteration.getRelativeError() + "\n");
 		}
-		*/
+		/**/
 		
 		return iterations;
 	}
 	
 	private ArrayList<Iteration> bisectionMethod(ProjectInput input) {
 		return BisectionComputation.computeBisectionOutput(input.getPolynomial(),
-				input.getX0(), input.getX1(), (int) input.getThreshold().getValue(),
+				input.getX0(), input.getX1(), input.getThreshold().getValue(),
 				(int) input.getIteration().getValue());
 	}
 	

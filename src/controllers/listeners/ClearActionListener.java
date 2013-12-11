@@ -16,7 +16,7 @@ public class ClearActionListener implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		view.clearFields();
+		view.clearInput();
 		
 		NumericKeyListener numericListener = new NumericKeyListener();
 		

@@ -10,14 +10,14 @@ public class BisectionComputation {
 	/*
 	 * returns null if invalid input
 	 */
-	public static ArrayList<Iteration> computeBisectionOutput(ArrayList<Term> polynomial, double aX, double bX, int tolerance, int iterationLimit) {
+	public static ArrayList<Iteration> computeBisectionOutput(ArrayList<Term> polynomial, double aX, double bX, double threshold, int iterationLimit) {
 		Point a = new Point(aX, SharedComputation.findY(polynomial, aX));
 		Point b = new Point(bX, SharedComputation.findY(polynomial, bX));
 		if (iterationLimit == -1) {
 			iterationLimit = 1000;
 		}
 		
-		if (!(a.getY() > 0 && b.getY() < 0 || a.getY() < 0 && b.getY() > 0) && tolerance > 0) {
+		if (!(a.getY() > 0 && b.getY() < 0 || a.getY() < 0 && b.getY() > 0)) {
 			return null;
 		}
 		
@@ -36,6 +36,7 @@ public class BisectionComputation {
 		iteration.setLower(a);
 		iteration.setUpper(b);
 		iteration.setMid(mid);
+		iteration.setRelativeError(1);
 		result.add(iteration);
 		
 		if (mid.getY() == 0) {
@@ -43,7 +44,8 @@ public class BisectionComputation {
 		}
 		
 		int i = 0;
-		double tol = Math.pow(10, tolerance);
+		double previousMid = midX;
+		double relativeError = 0;
 		
 		do {
 			// choose new side of the binary split
@@ -58,15 +60,22 @@ public class BisectionComputation {
 			// get new iteration midpoint
 			midX = (a.getX() + b.getX()) / 2;
 			mid = new Point(midX, SharedComputation.findY(polynomial, midX));
+			relativeError = (midX - previousMid) / midX;
+			if (relativeError < 0) {
+				relativeError *= -1;
+			}
 			
 			iteration = new Iteration();
 			iteration.setLower(a);
 			iteration.setUpper(b);
 			iteration.setMid(mid);
+			iteration.setRelativeError(relativeError);
 			result.add(iteration);
-		}while( !isMidPointExactRoot(mid) && !arePointsEqualWithinDecimalTolerance(a,b,tol,tolerance) && !isIterationLimitReached(iterationLimit,i));
+			
+			previousMid = midX;
+		}
+		while( !isMidPointExactRoot(mid) && relativeError > threshold && !isIterationLimitReached(iterationLimit,i));
 		
-		SharedComputation.computeRelativeError(result);
 		return result;
 	}
 

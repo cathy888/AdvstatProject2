@@ -58,6 +58,7 @@ public class MainView extends JFrame {
 	private JPanel panPolynomials;
 	private JTable table;
 	private JPanel panPoint;
+	private JPanel panGraph;
 	
 	private JButton btnBisectionMethod;
 	private AbstractButton chkbxIterations;
@@ -76,6 +77,8 @@ public class MainView extends JFrame {
 	
 	private XYSeries line1;
 	private XYSeries line2;
+	private XYSeries line3;
+	private XYSeries line4;
 	
 	private DefaultTableModel tableModel;
 	
@@ -222,9 +225,9 @@ public class MainView extends JFrame {
 		panRight.setLayout(new BorderLayout(0, 0));
 		panRight.setMinimumSize(new Dimension(90, 100));
 		
-		JPanel panGraph = new JPanel();
+		panGraph = new JPanel();
 		panGraph.setLayout(new BorderLayout(0, 0));
-		panGraph.add(createGraphPanel(), BorderLayout.CENTER);
+		panGraph.add(createGraphPanel(true), BorderLayout.CENTER);
 		panRight.add(panGraph, BorderLayout.SOUTH);
 		
 		JScrollPane scpTable = new JScrollPane();
@@ -241,8 +244,6 @@ public class MainView extends JFrame {
 		
 		TableColumnAdjuster adjuster = new TableColumnAdjuster(table);
 		adjuster.setDynamicAdjustment(true);
-		
-		panGraph.add(createGraphPanel(), BorderLayout.CENTER);
 	}
 	
 	/* Add Rows to Table */
@@ -323,6 +324,21 @@ public class MainView extends JFrame {
 		}
 		setIntervalMode(b);
 		setTableBisection(b);
+		panGraph.add(createGraphPanel(b), BorderLayout.CENTER);
+	}
+	
+	/* Toggle Line Names */
+	public void setGraphLines(boolean b) {
+		if (b) {
+			line2 = new XYSeries("Lower");
+			line3 = new XYSeries("Mid");
+			line4 = new XYSeries("Upper");
+		}
+		else {
+			line2 = new XYSeries("Xi-2");
+			line3 = new XYSeries("Xi-1");
+			line4 = new XYSeries("Xi");
+		}
 	}
 	
 	/* Get Selected Method */
@@ -398,8 +414,8 @@ public class MainView extends JFrame {
 		return input;
 	}
 	
-	/* Clear the Fields */
-	public void clearFields() {
+	/* Clear the Input Fields */
+	public void clearInput() {
 		panPolynomials.removeAll();
 		txtX0.setText("");
 		txtX1.setText("");
@@ -407,8 +423,14 @@ public class MainView extends JFrame {
 		txtThreshold.setText("");
 		chkbxIterations.setSelected(true);
 		chkbxThreshold.setSelected(true);
+	}
+	
+	/* Clear the Output Fields */
+	public void clearOutput() {
 		line1.clear();
 		line2.clear();
+		line3.clear();
+		line4.clear();
 		
 		while (tableModel.getRowCount() > 0) {
 			tableModel.removeRow(0);
@@ -416,13 +438,15 @@ public class MainView extends JFrame {
 	}
 	
 	/* Create a Graph */
-	private ChartPanel createGraphPanel() {
+	private ChartPanel createGraphPanel(boolean b) {
 		line1 = new XYSeries("Polynomial");
-		line2 = new XYSeries("Iteration");
+		setGraphLines(b);
 		
 		XYSeriesCollection xyDataset = new XYSeriesCollection();
 		xyDataset.addSeries(line1);
 		xyDataset.addSeries(line2);
+		xyDataset.addSeries(line3);
+		xyDataset.addSeries(line4);
 		
 		JFreeChart chart = ChartFactory.createXYLineChart("", "x", "f(x)",
 				xyDataset, PlotOrientation.VERTICAL, true, true, false);
