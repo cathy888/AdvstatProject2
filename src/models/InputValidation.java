@@ -6,19 +6,13 @@ public class InputValidation {
 	
 	public InputValidation() {}
 	
-	public static boolean validateInput(boolean bisection, ProjectInput input) {
+	public static boolean validateInput(ProjectInput input) {
 		if (input.getPolynomial().size() <= 0) {
 			return false;
 		}
 		
 		if (!input.getIteration().isEnabled() && !input.getThreshold().isEnabled()) {
 			return false;
-		}
-		
-		if (bisection) {
-			if (!validateBisectionInput(input)) {
-				return false;
-			}
 		}
 		
 		return true;

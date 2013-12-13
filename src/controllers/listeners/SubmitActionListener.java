@@ -31,11 +31,10 @@ public class SubmitActionListener implements ActionListener {
 		
 		try {
 			ArrayList<Iteration> iterations = null;
-			boolean bisection = view.getSelectedMethod().equals("Bisection Method");
 			input = view.getInput();
 			
-			if (InputValidation.validateInput(bisection, input)) {
-				if (bisection) {
+			if (InputValidation.validateInput(input)) {
+				if (view.getSelectedMethod().equals("Bisection Method")) {
 					iterations = bisectionMethod(input);
 					BisectionOutput output = new BisectionOutput();
 					output.setOutputs(iterations);
