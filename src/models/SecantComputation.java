@@ -53,10 +53,6 @@ public class SecantComputation {
 			if (error == 0.0) {
 				break;
 			}
-			
-			if (Ans.get(current).getMid().getY() == 0) {
-				break;
-			}
 		}
 
 		return Ans;

@@ -274,7 +274,7 @@ public class MainView extends JFrame {
 	/* Add Row to Table */
 	public void addSecantRow(Iteration iteration) {
 		tableModel.addRow(new Object[] {
-				tableModel.getRowCount() + 1,  iteration.getMid().getX(),
+				tableModel.getRowCount(),  iteration.getMid().getX(),
 				iteration.getMid().getY(), iteration.getRelativeError()
 		});
 	}
