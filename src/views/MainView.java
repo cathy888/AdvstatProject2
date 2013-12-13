@@ -239,7 +239,12 @@ public class MainView extends JFrame {
 						"f( Lower Root )", "f( Upper Root )", "f( Middle Root )",
 						"Relative Error" });
 		
-		table = new JTable(tableModel);
+		table = new JTable(tableModel) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		scpTable.setViewportView(table);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
